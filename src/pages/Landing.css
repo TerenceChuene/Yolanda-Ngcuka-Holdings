@@ -1,0 +1,224 @@
+.landing {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+
+}
+
+.landing__waves {
+  position: absolute;
+  left: -2%;
+  bottom: -4%;
+  width: min(48vw, 520px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.95;
+  animation: waveDrift 12s ease-in-out infinite alternate;
+}
+
+.landing__waves svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  max-width: 1180px;
+  margin: 0 auto;
+  min-height: 100svh;
+  padding: clamp(2.5rem, 6vh, 4rem) clamp(1.5rem, 5vw, 4rem)
+    clamp(2rem, 5vh, 3rem);
+}
+
+.hero__copy {
+  max-width: 34rem;
+  animation: riseIn 0.9s var(--ease-out) both;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.75rem, 6.2vw, 4.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: var(--text);
+}
+
+.hero__title span {
+  display: block;
+}
+
+.hero__lede {
+  margin-top: 1.35rem;
+  max-width: 26rem;
+  font-size: clamp(0.95rem, 1.35vw, 1.1rem);
+  line-height: 1.55;
+  color: var(--text-muted);
+  font-weight: 500;
+  animation: riseIn 0.9s var(--ease-out) 0.12s both;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 2rem;
+  animation: riseIn 0.9s var(--ease-out) 0.22s both;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.85rem 1.45rem;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition:
+    transform 0.35s var(--ease-out),
+    background-color 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out),
+    border-color 0.35s var(--ease-out);
+}
+
+.btn-arrow {
+  flex-shrink: 0;
+  transition: transform 0.35s var(--ease-out);
+}
+
+.btn:hover .btn-arrow {
+  transform: translate(2px, -2px);
+}
+
+.btn--primary {
+  background: var(--gold);
+  color: var(--text);
+  border: 1.5px solid transparent;
+  box-shadow: 0 8px 24px rgba(240, 201, 120, 0.28);
+}
+
+.btn--primary:hover {
+  background: var(--gold-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(240, 201, 120, 0.38);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1.5px solid #1a1a1a;
+}
+
+.btn--ghost:hover {
+  background: rgba(26, 26, 26, 0.04);
+  transform: translateY(-2px);
+}
+
+.hero__visual {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: clamp(320px, 62vh, 560px);
+  animation: riseIn 1s var(--ease-out) 0.18s both;
+}
+
+.hero__portrait {
+  width: min(100%, 480px);
+  height: auto;
+  object-fit: contain;
+  object-position: bottom center;
+  animation: floatSoft 5.5s ease-in-out infinite;
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatSoft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes waveDrift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(18px);
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-top: 3rem;
+    padding-bottom: 0;
+  }
+
+  .hero__copy {
+    max-width: 100%;
+  }
+
+  .hero__visual {
+    min-height: 380px;
+    margin-top: 0.5rem;
+  }
+
+  .landing__waves {
+    width: min(70vw, 360px);
+    opacity: 0.7;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .hero__title {
+    font-size: clamp(2.35rem, 11vw, 3rem);
+  }
+
+  .hero__visual {
+    min-height: 320px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__copy,
+  .hero__lede,
+  .hero__actions,
+  .hero__visual,
+  .hero__portrait,
+  .landing__waves {
+    animation: none;
+  }
+}

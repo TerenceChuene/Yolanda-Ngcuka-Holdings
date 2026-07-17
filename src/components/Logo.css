@@ -1,0 +1,28 @@
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: transparent;
+}
+
+.brand-logo__img {
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.brand-logo--navbar .brand-logo__img {
+  height: clamp(48px, 6vw, 64px);
+  width: auto;
+  max-width: min(200px, 46vw);
+}
+
+.brand-logo--footer .brand-logo__img {
+  height: clamp(72px, 9vw, 100px);
+  width: auto;
+  max-width: 240px;
+}
