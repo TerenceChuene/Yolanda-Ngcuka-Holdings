@@ -44,7 +44,7 @@
 .hero__title {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(2.75rem, 6.2vw, 4.75rem);
+  font-size: clamp(1.75rem, 6.2vw, 4.75rem);
   line-height: 1.05;
   letter-spacing: -0.035em;
   color: var(--text);
@@ -183,8 +183,7 @@
   }
 
   .hero__visual {
-    min-height: 380px;
-    margin-top: 0.5rem;
+    display: none;
   }
 
   .landing__waves {
@@ -205,10 +204,6 @@
 
   .hero__title {
     font-size: clamp(2.35rem, 11vw, 3rem);
-  }
-
-  .hero__visual {
-    min-height: 320px;
   }
 }
 

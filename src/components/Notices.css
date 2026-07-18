@@ -1,0 +1,227 @@
+.notices {
+  background: #ffffff;
+  color: var(--text);
+}
+
+.notices__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(3rem, 8vh, 5.5rem) clamp(1.5rem, 5vw, 4rem);
+}
+
+.notices__status {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.notices__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+  margin-bottom: clamp(2rem, 4.5vh, 3rem);
+  animation: noticesRise 0.8s var(--ease-out) both;
+}
+
+.notices__heading {
+  max-width: 28rem;
+}
+
+.notices__eyebrow {
+  margin-bottom: 0.55rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-orange);
+}
+
+.notices__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 3.6vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.notices__cta {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.85rem 1.45rem;
+  border-radius: 999px;
+  border: 1.5px solid #1a1a1a;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition:
+    transform 0.35s var(--ease-out),
+    background-color 0.35s var(--ease-out);
+}
+
+.notices__cta .btn-arrow {
+  flex-shrink: 0;
+  transition: transform 0.35s var(--ease-out);
+}
+
+.notices__cta:hover {
+  background: rgba(26, 26, 26, 0.04);
+  transform: translateY(-2px);
+}
+
+.notices__cta:hover .btn-arrow {
+  transform: translate(2px, -2px);
+}
+
+.notices__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.notices__item {
+  animation: noticesRise 0.8s var(--ease-out) both;
+}
+
+.notice-card {
+  display: block;
+  color: inherit;
+  height: 100%;
+  transition: transform 0.35s var(--ease-out);
+}
+
+.notice-card:hover {
+  transform: translateY(-4px);
+}
+
+.notice-card__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 11;
+  background: #eceae5;
+}
+
+.notice-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.notice-card:hover .notice-card__image {
+  transform: scale(1.04);
+}
+
+.notice-card__placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 55%, #333 100%);
+}
+
+.notice-card__placeholder--pdf {
+  background:
+    linear-gradient(145deg, #3a2a24 0%, #1f1714 50%, #4a3228 100%);
+}
+
+.notice-card__placeholder--doc,
+.notice-card__placeholder--docx {
+  background:
+    linear-gradient(145deg, #243044 0%, #151c28 50%, #2d3d55 100%);
+}
+
+.notice-card__ext {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.notice-card__date {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.15rem;
+  min-height: 3.15rem;
+  padding: 0.35rem 0.4rem;
+  background: var(--gold);
+  color: var(--text);
+  line-height: 1.05;
+}
+
+.notice-card__day {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.notice-card__month {
+  font-size: 0.72rem;
+  font-weight: 650;
+  text-transform: capitalize;
+}
+
+.notice-card__category {
+  margin-top: 0.95rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #8a8a8a;
+}
+
+.notice-card__title {
+  margin-top: 0.45rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  transition: color 0.25s var(--ease-out);
+}
+
+.notice-card:hover .notice-card__title {
+  color: var(--accent-orange);
+}
+
+@keyframes noticesRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .notices__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .notices__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .notices__grid {
+    grid-template-columns: 1fr;
+  }
+}

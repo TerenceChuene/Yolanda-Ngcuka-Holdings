@@ -3,6 +3,7 @@ import About from './pages/About'
 import Services from './pages/Services'
 import Team from './pages/Team'
 import Projects from './pages/Projects'
+import Notices from './components/Notices'
 import Contact from './pages/Contact'
 
 function Home() {
@@ -13,6 +14,7 @@ function Home() {
       <Services />
       <Team />
       <Projects />
+      <Notices />
       <Contact />
     </>
   )
