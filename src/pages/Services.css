@@ -1,10 +1,14 @@
 .services {
+  position: relative;
   min-height: 100svh;
+  overflow: hidden;
   background: var(--bg);
   color: var(--text);
 }
 
 .services__section {
+  position: relative;
+  z-index: 1;
   max-width: 1180px;
   margin: 0 auto;
   padding: clamp(3rem, 8vh, 5.5rem) clamp(1.5rem, 5vw, 4rem)

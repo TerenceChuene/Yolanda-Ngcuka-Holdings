@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import Waves from '../components/Waves'
 import './Team.css'
 
 const arrow = (
@@ -103,6 +104,7 @@ export default function Team() {
   return (
     <main className="team" id="team">
       <div className="team__backdrop" aria-hidden="true" />
+      <Waves side="right" />
 
       <section className="team__section">
         <header className="team__header">

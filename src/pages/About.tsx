@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import aboutTeam from '../assets/about-team.png'
 import founderAvatar from '../assets/founder-avatar.png'
+import Waves from '../components/Waves'
 import './About.css'
 
 const arrow = (
@@ -25,6 +26,7 @@ const arrow = (
 export default function About() {
   return (
     <main className="about" id="about">
+      <Waves side="right" />
       <section className="about__section">
         <div className="about__media">
           <div className="about__image-wrap">

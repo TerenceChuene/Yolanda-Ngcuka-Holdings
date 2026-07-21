@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Logo from './Logo'
+import Waves from './Waves'
 import './Footer.css'
 
 const quickLinks = [
@@ -20,6 +21,7 @@ const services = [
 export default function Footer() {
   return (
     <footer className="footer">
+      <Waves />
       <div className="footer__inner">
         <div className="footer__grid">
           <div className="footer__brand">

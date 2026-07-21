@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import consultant from '../assets/consultant.png'
+import Waves from '../components/Waves'
 import './Landing.css'
 
 const arrow = (
@@ -24,22 +25,7 @@ const arrow = (
 export default function Landing() {
   return (
     <main className="landing" id="home">
-      <div className="landing__waves" aria-hidden="true">
-        <svg viewBox="0 0 420 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M-20 120C40 70 90 160 160 100C230 40 280 90 340 55C380 32 410 20 450 40"
-            stroke="var(--green)"
-            strokeWidth="1.5"
-            strokeOpacity="0.35"
-          />
-          <path
-            d="M-10 145C50 95 110 175 175 120C240 65 300 110 360 80C400 60 430 50 470 70"
-            stroke="var(--gold)"
-            strokeWidth="1.5"
-            strokeOpacity="0.45"
-          />
-        </svg>
-      </div>
+      <Waves />
 
       <section className="hero">
         <div className="hero__copy">

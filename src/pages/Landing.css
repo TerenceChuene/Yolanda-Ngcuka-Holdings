@@ -5,23 +5,6 @@
 
 }
 
-.landing__waves {
-  position: absolute;
-  left: -2%;
-  bottom: -4%;
-  width: min(48vw, 520px);
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.95;
-  animation: waveDrift 12s ease-in-out infinite alternate;
-}
-
-.landing__waves svg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
 .hero {
   position: relative;
   z-index: 1;
@@ -163,15 +146,6 @@
   }
 }
 
-@keyframes waveDrift {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(18px);
-  }
-}
-
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
@@ -186,11 +160,6 @@
 
   .hero__visual {
     display: none;
-  }
-
-  .landing__waves {
-    width: min(70vw, 360px);
-    opacity: 0.7;
   }
 }
 
@@ -214,8 +183,7 @@
   .hero__lede,
   .hero__actions,
   .hero__visual,
-  .hero__portrait,
-  .landing__waves {
+  .hero__portrait {
     animation: none;
   }
 }

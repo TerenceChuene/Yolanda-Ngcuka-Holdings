@@ -1,10 +1,14 @@
 .about {
+  position: relative;
   min-height: 100svh;
+  overflow: hidden;
   background: var(--surface);
   color: var(--text);
 }
 
 .about__section {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   align-items: center;

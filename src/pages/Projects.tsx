@@ -3,6 +3,7 @@ import project1 from '../assets/project-1.png'
 import project2 from '../assets/project-2.png'
 import project3 from '../assets/project-3.png'
 import project4 from '../assets/project-4.png'
+import Waves from '../components/Waves'
 import './Projects.css'
 
 const arrow = (
@@ -77,6 +78,7 @@ export default function Projects() {
 
   return (
     <main className="projects" id="projects">
+      <Waves />
       <section className="projects__section">
         <header className="projects__header">
           <p className="projects__eyebrow">Project &amp; Case Studies</p>

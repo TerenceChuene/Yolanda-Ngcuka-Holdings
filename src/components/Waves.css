@@ -1,0 +1,54 @@
+.page-waves {
+  position: absolute;
+  left: -2%;
+  bottom: -4%;
+  width: min(48vw, 520px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.95;
+  animation: pageWaveDrift 12s ease-in-out infinite alternate;
+}
+
+.page-waves--right {
+  left: auto;
+  right: -2%;
+  transform: scaleX(-1);
+  animation-name: pageWaveDriftRight;
+}
+
+.page-waves svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@keyframes pageWaveDrift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(18px);
+  }
+}
+
+@keyframes pageWaveDriftRight {
+  from {
+    transform: scaleX(-1) translateX(0);
+  }
+  to {
+    transform: scaleX(-1) translateX(18px);
+  }
+}
+
+@media (max-width: 900px) {
+  .page-waves {
+    width: min(70vw, 360px);
+    opacity: 0.7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-waves {
+    animation: none;
+  }
+}

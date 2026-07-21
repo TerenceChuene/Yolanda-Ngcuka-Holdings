@@ -5,6 +5,7 @@ import {
   noticeLinkProps,
   type Notice,
 } from '../api/notices'
+import Waves from './Waves'
 import './Notices.css'
 
 function isImageType(type: string) {
@@ -72,6 +73,7 @@ export default function Notices() {
 
   return (
     <section className="notices" id="notices">
+      <Waves />
       <div className="notices__inner">
         <header className="notices__header">
           <div className="notices__heading">

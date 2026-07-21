@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { submitContact } from '../api/contact'
+import Waves from '../components/Waves'
 import './Contact.css'
 
 const subjects = [
@@ -57,6 +58,7 @@ export default function Contact() {
 
   return (
     <main className="contact" id="contact">
+      <Waves side="right" />
       <section className="contact__section">
         <header className="services__header">
           <div className="services__intro">

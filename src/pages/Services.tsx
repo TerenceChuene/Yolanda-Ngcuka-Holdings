@@ -1,3 +1,4 @@
+import Waves from '../components/Waves'
 import './Services.css'
 
 const arrowIcon = (
@@ -42,6 +43,7 @@ const services = [
 export default function Services() {
   return (
     <main className="services" id="services">
+      <Waves />
       <section className="services__section">
         <header className="services__header">
           <div className="services__intro">
