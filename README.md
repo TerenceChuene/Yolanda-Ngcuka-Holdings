@@ -93,12 +93,12 @@ Uploaded files are stored in `server/uploads/` and served at `/uploads/...`.
 
 ## Contact form (EmailJS)
 
-The contact page sends enquiries directly from the browser via [EmailJS](https://www.emailjs.com) (free: 200 emails/month, no credit card) to **madimetjaterencechuene@gmail.com**. No backend mail API is required.
+The contact page sends enquiries directly from the browser via [EmailJS](https://www.emailjs.com) (free: 200 emails/month, no credit card) to **example@gmail.com**. No backend mail API is required.
 
 1. Create a free account at https://www.emailjs.com.
 2. **Email Services → Add New Service** — connect Gmail (or another provider) and copy the **Service ID**.
 3. **Email Templates → Create New Template** with:
-   - **To Email:** `madimetjaterencechuene@gmail.com`
+   - **To Email:** `example@gmail.com`
    - **Reply To:** `{{reply_to}}`
    - **Subject:** `Website enquiry: {{subject}}`
    - **Content** (example):
