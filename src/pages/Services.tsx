@@ -73,12 +73,7 @@ export default function Services() {
           ))}
         </ul>
 
-        <div className="services__cta">
-          <a className="services__browse" href="#browse" id="browse">
-            Browse Services
-            {arrowIcon}
-          </a>
-        </div>
+       
       </section>
     </main>
   )

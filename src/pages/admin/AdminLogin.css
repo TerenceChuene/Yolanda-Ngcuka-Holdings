@@ -6,16 +6,16 @@
   padding: clamp(1.5rem, 4vw, 3rem);
   overflow: hidden;
   color: var(--text);
-  background: #1a1a1a;
+  background: var(--charcoal-deep);
 }
 
 .admin-login__atmosphere {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 70% 55% at 15% 20%, rgba(240, 201, 120, 0.28), transparent 55%),
-    radial-gradient(ellipse 55% 45% at 85% 75%, rgba(200, 228, 255, 0.22), transparent 50%),
-    linear-gradient(160deg, #121212 0%, #1f1c18 45%, #161616 100%);
+    radial-gradient(ellipse 70% 55% at 15% 20%, rgba(224, 184, 92, 0.3), transparent 55%),
+    radial-gradient(ellipse 55% 45% at 85% 75%, rgba(61, 107, 79, 0.28), transparent 50%),
+    linear-gradient(160deg, #121210 0%, #1a1f1b 45%, #141412 100%);
   animation: loginGlow 14s ease-in-out infinite alternate;
 }
 
@@ -90,8 +90,8 @@
 
 .admin-login__field input:focus {
   outline: none;
-  border-color: rgba(232, 93, 42, 0.55);
-  box-shadow: 0 0 0 3px rgba(232, 93, 42, 0.12);
+  border-color: rgba(61, 107, 79, 0.55);
+  box-shadow: 0 0 0 3px rgba(61, 107, 79, 0.12);
 }
 
 .admin-login__password {
@@ -131,7 +131,7 @@
 }
 
 .admin-login__submit:hover:not(:disabled) {
-  background: #2c2c2c;
+  background: var(--green-deep);
   transform: translateY(-1px);
 }
 

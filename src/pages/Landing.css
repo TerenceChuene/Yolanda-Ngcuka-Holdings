@@ -101,25 +101,27 @@
 
 .btn--primary {
   background: var(--gold);
-  color: var(--text);
+  color: var(--charcoal-deep);
   border: 1.5px solid transparent;
-  box-shadow: 0 8px 24px rgba(240, 201, 120, 0.28);
+  box-shadow: 0 8px 24px rgba(224, 184, 92, 0.3);
 }
 
 .btn--primary:hover {
   background: var(--gold-hover);
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(240, 201, 120, 0.38);
+  box-shadow: 0 12px 28px rgba(224, 184, 92, 0.4);
 }
 
 .btn--ghost {
   background: transparent;
   color: var(--text);
-  border: 1.5px solid #1a1a1a;
+  border: 1.5px solid var(--charcoal);
 }
 
 .btn--ghost:hover {
-  background: rgba(26, 26, 26, 0.04);
+  background: var(--green-soft);
+  border-color: var(--green);
+  color: var(--green-deep);
   transform: translateY(-2px);
 }
 

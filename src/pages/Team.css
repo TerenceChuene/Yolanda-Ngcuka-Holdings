@@ -2,7 +2,7 @@
   position: relative;
   min-height: 100svh;
   overflow: hidden;
-  background: #f7f1df;
+  background: var(--bg-earth);
   color: var(--text);
 }
 
@@ -12,8 +12,8 @@
   pointer-events: none;
   opacity: 0.07;
   background-image:
-    linear-gradient(#1a1a1a 1px, transparent 1px),
-    linear-gradient(90deg, #1a1a1a 1px, transparent 1px);
+    linear-gradient(var(--charcoal) 1px, transparent 1px),
+    linear-gradient(90deg, var(--charcoal) 1px, transparent 1px);
   background-size: 72px 72px;
   mask-image: radial-gradient(ellipse at 70% 40%, black 20%, transparent 72%);
 }
@@ -57,7 +57,7 @@
   gap: 0.45rem;
   flex-shrink: 0;
   padding: 0.85rem 1.5rem;
-  border: 1.5px solid #1a1a1a;
+  border: 1.5px solid var(--charcoal);
   border-radius: 999px;
   font-size: 0.95rem;
   font-weight: 600;
@@ -65,13 +65,17 @@
   transition:
     transform 0.35s var(--ease-out),
     background-color 0.35s var(--ease-out),
-    box-shadow 0.35s var(--ease-out);
+    box-shadow 0.35s var(--ease-out),
+    border-color 0.35s var(--ease-out),
+    color 0.35s var(--ease-out);
 }
 
 .team__browse:hover {
-  background: rgba(26, 26, 26, 0.04);
+  background: var(--green-soft);
+  border-color: var(--green);
+  color: var(--green-deep);
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(26, 26, 26, 0.08);
+  box-shadow: 0 10px 24px rgba(42, 77, 56, 0.1);
 }
 
 .team__browse svg {
@@ -134,7 +138,7 @@
   font-size: 2.35rem;
   font-weight: 700;
   letter-spacing: 0.04em;
-  box-shadow: 0 0 0 6px rgba(212, 175, 55, 0.12);
+  box-shadow: 0 0 0 6px rgba(201, 162, 39, 0.14);
 }
 
 .member-card__name {
@@ -185,12 +189,12 @@
 .member-card__bio {
   font-size: clamp(0.95rem, 1.25vw, 1.05rem);
   line-height: 1.75;
-  color: black;
+  color: var(--charcoal);
   font-weight: 500;
 }
 
 .member-card__bio strong {
-  color: #1b2a4a;
+  color: var(--green-deep);
   font-weight: 700;
 }
 
@@ -217,7 +221,7 @@
 
 .member-cred:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 24px rgba(27, 42, 74, 0.08);
+  box-shadow: 0 12px 24px rgba(42, 77, 56, 0.1);
 }
 
 .member-cred__icon {
@@ -234,28 +238,28 @@
 }
 
 .member-cred--navy .member-cred__icon {
-  color: #1b2a4a;
+  color: var(--green-deep);
 }
 
 .member-cred--teal .member-cred__icon {
-  color: #2f5d56;
+  color: var(--green);
 }
 
 .member-cred--gold .member-cred__icon {
-  color: #c4a035;
+  color: var(--member-gold);
 }
 
 .member-cred__title {
   font-size: 0.98rem;
   font-weight: 700;
-  color: #1b2a4a;
+  color: var(--green-deep);
   line-height: 1.25;
 }
 
 .member-cred__subtitle {
   margin-top: 0.2rem;
   font-size: 0.82rem;
-  color: #6b6b6b;
+  color: var(--text-muted);
   font-weight: 500;
 }
 

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useEffect, useRef, useState, type MouseEvent } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Logo from './Logo'
 import './Navbar.css'
 
@@ -16,39 +16,144 @@ const arrow = (
 )
 
 const links = [
-  { label: 'Home', to: '/', hash: '' },
-  { label: 'About', to: '/#about', hash: 'about' },
-  { label: 'Service', to: '/#services', hash: 'services' },
-  { label: 'Team', to: '/#team', hash: 'team' },
-  { label: 'Projects', to: '/#projects', hash: 'projects' },
-  { label: 'Contact', to: '/#contact', hash: 'contact' },
-]
+  { label: 'Home', to: '/', section: 'home' },
+  { label: 'About', to: '/#about', section: 'about' },
+  { label: 'Service', to: '/#services', section: 'services' },
+  { label: 'Team', to: '/#team', section: 'team' },
+  { label: 'Projects', to: '/#projects', section: 'projects' },
+  { label: 'Contact', to: '/#contact', section: 'contact' },
+] as const
 
-function isActive(pathname: string, hash: string, linkHash: string) {
-  const cleanHash = hash.replace(/^#/, '')
-  if (linkHash === '') {
-    return pathname === '/' && cleanHash === ''
+const SECTION_IDS = links.map((link) => link.section)
+
+function getNavOffset() {
+  const nav = document.querySelector('.navbar')
+  return (nav?.getBoundingClientRect().height ?? 80) + 12
+}
+
+/** Scroll so the section top sits just below the sticky navbar. */
+export function scrollToSection(sectionId: string) {
+  if (sectionId === 'home') {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    return
   }
-  if (pathname === `/${linkHash}`) return true
-  return pathname === '/' && cleanHash === linkHash
+
+  const el = document.getElementById(sectionId)
+  if (!el) return
+
+  const top = el.getBoundingClientRect().top + window.scrollY - getNavOffset()
+  window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
+}
+
+function sectionFromScroll() {
+  const marker = window.scrollY + getNavOffset() + 24
+  let current: (typeof SECTION_IDS)[number] = 'home'
+
+  for (const id of SECTION_IDS) {
+    const el = document.getElementById(id)
+    if (!el) continue
+    const top = el.getBoundingClientRect().top + window.scrollY
+    if (top <= marker) {
+      current = id
+    }
+  }
+
+  return current
 }
 
 export default function Navbar() {
   const location = useLocation()
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState<(typeof SECTION_IDS)[number]>('home')
+  const skipHashScroll = useRef(false)
 
   useEffect(() => {
     setOpen(false)
   }, [location.pathname, location.hash])
 
+  // Handle hash navigation after route changes (e.g. /about → /#team)
   useEffect(() => {
-    if (!location.hash) return
-    const id = location.hash.replace('#', '')
-    const el = document.getElementById(id)
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (location.pathname !== '/') return
+
+    const id = location.hash.replace(/^#/, '')
+    if (!id) return
+
+    if (skipHashScroll.current) {
+      skipHashScroll.current = false
+      return
+    }
+
+    let cancelled = false
+    const frame = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (!cancelled) scrollToSection(id)
+      })
+    })
+
+    return () => {
+      cancelled = true
+      cancelAnimationFrame(frame)
     }
   }, [location.pathname, location.hash])
+
+  useEffect(() => {
+    if (location.pathname !== '/') return
+
+    let frame = 0
+
+    function update() {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        setActiveSection(sectionFromScroll())
+      })
+    }
+
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [location.pathname])
+
+  function isLinkActive(section: string) {
+    if (location.pathname === `/${section}`) return true
+    if (location.pathname !== '/') return false
+    return activeSection === section
+  }
+
+  function goToSection(
+    event: MouseEvent<HTMLAnchorElement>,
+    section: (typeof SECTION_IDS)[number],
+    to: string,
+  ) {
+    event.preventDefault()
+    setActiveSection(section)
+    setOpen(false)
+
+    if (location.pathname !== '/') {
+      navigate(to)
+      return
+    }
+
+    // Already on home — update the URL and scroll immediately
+    if (section === 'home') {
+      skipHashScroll.current = true
+      if (location.hash) navigate('/', { replace: true })
+      scrollToSection('home')
+      return
+    }
+
+    skipHashScroll.current = true
+    if (location.hash !== `#${section}`) {
+      navigate(`/#${section}`)
+    }
+    scrollToSection(section)
+  }
 
   return (
     <header className="navbar">
@@ -58,21 +163,14 @@ export default function Navbar() {
         <nav className="navbar__nav" aria-label="Primary">
           <ul className={`navbar__links${open ? ' navbar__links--open' : ''}`}>
             {links.map((link) => {
-              const active = isActive(
-                location.pathname,
-                location.hash,
-                link.hash,
-              )
+              const active = isLinkActive(link.section)
               return (
                 <li key={link.label}>
                   <Link
                     to={link.to}
                     className={`navbar__link${active ? ' navbar__link--active' : ''}`}
-                    onClick={() => {
-                      if (link.hash === '' && location.pathname === '/') {
-                        window.scrollTo({ top: 0, behavior: 'smooth' })
-                      }
-                    }}
+                    aria-current={active ? 'true' : undefined}
+                    onClick={(event) => goToSection(event, link.section, link.to)}
                   >
                     {link.label}
                   </Link>
@@ -82,7 +180,11 @@ export default function Navbar() {
           </ul>
         </nav>
 
-        <Link className="navbar__cta" to="/#contact">
+        <Link
+          className="navbar__cta"
+          to="/#contact"
+          onClick={(event) => goToSection(event, 'contact', '/#contact')}
+        >
           Get Consulting
           {arrow}
         </Link>

@@ -10,6 +10,7 @@ import AdminLogin from './pages/admin/AdminLogin'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import Home from './Home'
 import { AuthProvider } from './context/AuthContext'
+import Seo from './seo/Seo'
 
 function AppShell() {
   const location = useLocation()
@@ -17,6 +18,7 @@ function AppShell() {
 
   return (
     <>
+      <Seo />
       {!isAdmin && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />

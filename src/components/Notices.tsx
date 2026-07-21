@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import {
   fetchActiveNotices,
   noticeFileUrl,
@@ -7,25 +6,6 @@ import {
   type Notice,
 } from '../api/notices'
 import './Notices.css'
-
-const arrow = (
-  <svg
-    className="btn-arrow"
-    width="14"
-    height="14"
-    viewBox="0 0 14 14"
-    fill="none"
-    aria-hidden="true"
-  >
-    <path
-      d="M3 11L11 3M11 3H5.5M11 3V8.5"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-)
 
 function isImageType(type: string) {
   const t = type.toLowerCase()
@@ -98,10 +78,7 @@ export default function Notices() {
             <p className="notices__eyebrow">Notices & Updates</p>
             <h2 className="notices__title">Official public notices & documents</h2>
           </div>
-          <Link className="notices__cta" to="/#services">
-            Browse Services
-            {arrow}
-          </Link>
+          
         </header>
 
         <ul className="notices__grid">

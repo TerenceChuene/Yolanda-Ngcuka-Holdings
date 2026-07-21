@@ -1,0 +1,11 @@
+# https://ynh.co.za/robots.txt
+# Update Sitemap URL if VITE_SITE_URL / production domain differs.
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/
+Disallow: /uploads/
+
+Sitemap: https://ynh.co.za/sitemap.xml

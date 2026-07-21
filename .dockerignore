@@ -1,0 +1,14 @@
+node_modules
+server/node_modules
+dist
+server/uploads/*
+!server/uploads/.gitkeep
+.git
+.gitignore
+.env
+.env.*
+server/.env
+*.md
+.vscode
+.cursor
+**/agent-transcripts

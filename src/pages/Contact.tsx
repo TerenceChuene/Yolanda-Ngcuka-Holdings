@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { submitContact } from '../api/contact'
 import './Contact.css'
 
 const subjects = [
@@ -21,28 +22,51 @@ const plane = (
 )
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>(
+    'idle',
+  )
+  const [errorMessage, setErrorMessage] = useState('')
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setSubmitted(true)
+    const form = event.currentTarget
+    const data = new FormData(form)
+
+    setStatus('sending')
+    setErrorMessage('')
+
+    try {
+      await submitContact({
+        name: String(data.get('name') ?? ''),
+        email: String(data.get('email') ?? ''),
+        phone: String(data.get('phone') ?? ''),
+        subject: String(data.get('subject') ?? ''),
+        message: String(data.get('message') ?? ''),
+      })
+      form.reset()
+      setStatus('success')
+    } catch (err) {
+      setStatus('error')
+      setErrorMessage(
+        err instanceof Error
+          ? err.message
+          : 'Failed to send your message. Please try again.',
+      )
+    }
   }
 
   return (
     <main className="contact" id="contact">
-     
-     
       <section className="contact__section">
-      <header className="services__header">
-      <div className="services__intro">
+        <header className="services__header">
+          <div className="services__intro">
             <p className="services__eyebrow">Our Services</p>
             <h1 className="services__title">
               We Provide The Best Service For Consulting
             </h1>
           </div>
-          </header>
+        </header>
         <div className="contact-card">
-          
           <div className="contact-card__info">
             <div className="contact-card__office">
               <h2 className="contact-card__office-title">Our Office</h2>
@@ -145,7 +169,9 @@ export default function Contact() {
                 type="text"
                 name="name"
                 placeholder="Your full name"
+                autoComplete="name"
                 required
+                disabled={status === 'sending'}
               />
             </label>
 
@@ -157,7 +183,9 @@ export default function Contact() {
                 type="email"
                 name="email"
                 placeholder="you@company.co.za"
+                autoComplete="email"
                 required
+                disabled={status === 'sending'}
               />
             </label>
 
@@ -167,6 +195,8 @@ export default function Contact() {
                 type="tel"
                 name="phone"
                 placeholder="067 000 0000"
+                autoComplete="tel"
+                disabled={status === 'sending'}
               />
             </label>
 
@@ -174,7 +204,12 @@ export default function Contact() {
               <span>
                 Subject <em>*</em>
               </span>
-              <select name="subject" required defaultValue="">
+              <select
+                name="subject"
+                required
+                defaultValue=""
+                disabled={status === 'sending'}
+              >
                 <option value="" disabled>
                   Select a service
                 </option>
@@ -195,21 +230,31 @@ export default function Contact() {
                 rows={5}
                 placeholder="Tell us about your project or enquiry..."
                 required
+                disabled={status === 'sending'}
               />
             </label>
 
             <div className="contact-card__form-footer">
               <p className="contact-card__required">* Required fields</p>
-              <button type="submit" className="contact-card__submit">
-                Send Message
-                {plane}
+              <button
+                type="submit"
+                className="contact-card__submit"
+                disabled={status === 'sending'}
+              >
+                {status === 'sending' ? 'Sending…' : 'Send Message'}
+                {status === 'sending' ? null : plane}
               </button>
             </div>
 
-            {submitted ? (
+            {status === 'success' ? (
               <p className="contact-card__success" role="status">
-                Thanks — your message is ready to send. We&apos;ll respond within
-                24 hours.
+                Thanks your message has been sent. We&apos;ll respond as soon as possible.
+              </p>
+            ) : null}
+
+            {status === 'error' ? (
+              <p className="contact-card__error" role="alert">
+                {errorMessage}
               </p>
             ) : null}
           </form>

@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import multer from 'multer'
 import path from 'path'
+import { access } from 'fs/promises'
 import { fileURLToPath } from 'url'
 import { connectDB } from './config/db.js'
 import { ensureBootstrapAdmin } from './controllers/authController.js'
@@ -14,6 +15,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express()
 const PORT = process.env.PORT || 5000
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173'
+const clientDist = process.env.CLIENT_DIST
+  ? path.resolve(process.env.CLIENT_DIST)
+  : path.resolve(__dirname, '../../dist')
 
 app.use(
   cors({
@@ -29,13 +33,33 @@ app.get('/api/health', (_req, res) => {
   res.json({ ok: true })
 })
 
-app.use((err, _req, res, _next) => {
-  if (err instanceof multer.MulterError || err.message?.includes('Invalid file')) {
-    return res.status(400).json({ error: err.message })
+async function mountClient() {
+  try {
+    await access(path.join(clientDist, 'index.html'))
+  } catch {
+    // Local API-only mode — Vite runs separately.
+    return
   }
-  console.error(err)
-  return res.status(500).json({ error: 'Internal server error.' })
-})
+
+  app.use(express.static(clientDist))
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+      return next()
+    }
+    res.sendFile(path.join(clientDist, 'index.html'))
+  })
+
+}
+
+function mountErrorHandler() {
+  app.use((err, _req, res, _next) => {
+    if (err instanceof multer.MulterError || err.message?.includes('Invalid file')) {
+      return res.status(400).json({ error: err.message })
+    }
+    console.error(err)
+    return res.status(500).json({ error: 'Internal server error.' })
+  })
+}
 
 async function start() {
   const uri = process.env.MONGODB_URI
@@ -48,10 +72,16 @@ async function start() {
 
   await connectDB(uri)
   await ensureBootstrapAdmin()
+  await mountClient()
+  mountErrorHandler()
 
   app.listen(PORT, () => {
-    console.log(`Notice API listening on http://localhost:${PORT}`)
-    console.log(`Uploads served from ${path.resolve(__dirname, '../uploads')}`)
+    console.log(`Server is running on port ${PORT}`)
+    console.log(`Client is running on port ${CLIENT_ORIGIN}`)
+    console.log(`Uploads are served from ${path.resolve(__dirname, '../uploads')}`)
+    console.log(`Notices API is running on http://localhost:${PORT}/api/notices`)
+    console.log(`Auth API is running on http://localhost:${PORT}/api/auth`)
+    console.log(`Health check is running on http://localhost:${PORT}/api/health`)
   })
 }
 

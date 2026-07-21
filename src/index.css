@@ -1,15 +1,35 @@
 :root {
-  --bg: #f4f2ee;
-  --bg-soft: #f8f6f2;
-  --text: #1a1a1a;
-  --text-muted: #5c5c5c;
-  --gold: #f0c978;
-  --gold-hover: #e8bc62;
-  --sky: #c8e4ff;
-  --sky-soft: #d9edff;
-  --accent-orange: #e85d2a;
-  --member-gold: #d4af37;
+  /* Earth tones & white */
+  --bg: #f3efe6;
+  --bg-soft: #faf7f1;
+  --bg-earth: #e6ddd0;
+  --surface: #ffffff;
+
+  /* Charcoal */
+  --charcoal: #2a2a28;
+  --charcoal-deep: #1a1a18;
+  --text: #2a2a28;
+  --text-muted: #5e5b55;
+
+  /* Green */
+  --green: #3d6b4f;
+  --green-deep: #2a4d38;
+  --green-soft: #e4efe8;
+  --green-muted: #6b8f78;
+
+  /* Gold */
+  --gold: #e0b85c;
+  --gold-hover: #d4a84b;
+  --gold-soft: #f0c978;
+  --member-gold: #c9a227;
+
+  /* Accents & aliases */
+  --accent: var(--green);
+  --accent-orange: var(--green);
+  --sky: var(--green-soft);
+  --sky-soft: #edf4ef;
   --line: #ffffff;
+
   --font-display: 'Outfit', sans-serif;
   --font-body: 'Manrope', sans-serif;
   --font-serif: 'Cormorant Garamond', Georgia, serif;
@@ -24,7 +44,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5.5rem;
+  scroll-padding-top: 6.5rem;
 }
 
 body {

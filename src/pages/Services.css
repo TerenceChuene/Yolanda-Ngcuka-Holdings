@@ -9,7 +9,7 @@
   margin: 0 auto;
   padding: clamp(3rem, 8vh, 5.5rem) clamp(1.5rem, 5vw, 4rem)
     clamp(2.5rem, 6vh, 4rem);
-  border-bottom: 1px solid #e2dfd9;
+  border-bottom: 1px solid var(--bg-earth);
 }
 
 .services__header {
@@ -42,7 +42,7 @@
   justify-self: end;
   font-size: clamp(0.88rem, 1.15vw, 0.98rem);
   line-height: 1.7;
-  color: #6b6b6b;
+  color: var(--text-muted);
   font-weight: 500;
   padding-bottom: 0.15rem;
 }
@@ -62,7 +62,7 @@
   flex-direction: column;
   min-height: 280px;
   padding: 1.5rem 1.35rem 1.35rem;
-  background: #ffffff;
+  background: var(--surface);
   color: inherit;
   transition:
     background-color 0.35s var(--ease-out),
@@ -101,7 +101,7 @@
   width: 28px;
   height: 1.5px;
   margin-bottom: 1.35rem;
-  background: #1a1a1a;
+  background: var(--charcoal);
 }
 
 .service-card__title {
@@ -116,7 +116,7 @@
   margin-top: 0.85rem;
   font-size: 0.9rem;
   line-height: 1.55;
-  color: #666666;
+  color: var(--text-muted);
   font-weight: 500;
 }
 
@@ -128,8 +128,8 @@
   margin-top: auto;
   margin-left: auto;
   border-radius: 50%;
-  background: #111111;
-  color: #ffffff;
+  background: var(--green-deep);
+  color: var(--surface);
   transition:
     background-color 0.35s var(--ease-out),
     color 0.35s var(--ease-out),
@@ -139,8 +139,8 @@
 .service-card--featured .service-card__action,
 .service-card:hover .service-card__action,
 .service-card:focus-visible .service-card__action {
-  background: #ffffff;
-  color: #111111;
+  background: var(--surface);
+  color: var(--green-deep);
 }
 
 .service-card:hover .service-card__action {
@@ -159,7 +159,7 @@
   align-items: center;
   gap: 0.45rem;
   padding: 0.85rem 1.55rem;
-  border: 1.5px solid #1a1a1a;
+  border: 1.5px solid var(--charcoal);
   border-radius: 999px;
   font-size: 0.95rem;
   font-weight: 600;
@@ -167,13 +167,17 @@
   transition:
     transform 0.35s var(--ease-out),
     background-color 0.35s var(--ease-out),
-    box-shadow 0.35s var(--ease-out);
+    box-shadow 0.35s var(--ease-out),
+    border-color 0.35s var(--ease-out),
+    color 0.35s var(--ease-out);
 }
 
 .services__browse:hover {
-  background: rgba(26, 26, 26, 0.04);
+  background: var(--green-soft);
+  border-color: var(--green);
+  color: var(--green-deep);
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(26, 26, 26, 0.08);
+  box-shadow: 0 10px 24px rgba(42, 77, 56, 0.1);
 }
 
 .services__browse svg {

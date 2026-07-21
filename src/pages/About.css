@@ -1,6 +1,6 @@
 .about {
   min-height: 100svh;
-  background: #ffffff;
+  background: var(--surface);
   color: var(--text);
 }
 
@@ -25,7 +25,7 @@
   overflow: hidden;
   border-radius: 2px;
   aspect-ratio: 1.05 / 1;
-  background: #2a2a2a;
+  background: var(--charcoal);
 }
 
 .about__image {
@@ -42,8 +42,8 @@
   z-index: 2;
   width: min(92%, 340px);
   padding: 1.05rem 1.15rem 1.15rem;
-  background: #d7f0ff;
-  box-shadow: 0 14px 36px rgba(26, 26, 26, 0.1);
+  background: var(--green-soft);
+  box-shadow: 0 14px 36px rgba(42, 42, 40, 0.1);
   animation: aboutRise 0.9s var(--ease-out) 0.15s both;
 }
 
@@ -60,7 +60,7 @@
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
-  background: #eee;
+  background: var(--bg-earth);
 }
 
 .about__attribution {
@@ -83,7 +83,7 @@
   padding-left: 0.15rem;
   font-size: 0.88rem;
   line-height: 1.55;
-  color: #2f2f2f;
+  color: var(--charcoal);
   font-weight: 500;
 }
 
@@ -94,7 +94,7 @@
   font-size: 1.35rem;
   line-height: 0;
   vertical-align: -0.15em;
-  color: #7a7a7a;
+  color: var(--green-muted);
 }
 
 .about__copy {
@@ -128,7 +128,7 @@
 .about__body p {
   font-size: clamp(0.92rem, 1.2vw, 1rem);
   line-height: 1.7;
-  color: #666666;
+  color: var(--text-muted);
   font-weight: 500;
 }
 
@@ -146,8 +146,8 @@
   gap: 0.45rem;
   padding: 0.9rem 1.55rem;
   border-radius: 999px;
-  background: #111111;
-  color: #ffffff;
+  background: var(--green-deep);
+  color: var(--surface);
   font-weight: 600;
   font-size: 0.95rem;
   transition:
@@ -157,9 +157,9 @@
 }
 
 .about-btn:hover {
-  background: #000000;
+  background: var(--green);
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 12px 28px rgba(42, 77, 56, 0.28);
 }
 
 .about-arrow {
@@ -192,7 +192,7 @@
   place-items: center;
   width: 42px;
   height: 42px;
-  border: 1.5px solid #1a1a1a;
+  border: 1.5px solid var(--charcoal);
   border-radius: 50%;
   transition: transform 0.35s var(--ease-out);
 }
