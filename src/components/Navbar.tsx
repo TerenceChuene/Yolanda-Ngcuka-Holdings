@@ -180,26 +180,28 @@ export default function Navbar() {
           </ul>
         </nav>
 
-        <Link
-          className="navbar__cta"
-          to="/#contact"
-          onClick={(event) => goToSection(event, 'contact', '/#contact')}
-        >
-          Get Consulting
-          {arrow}
-        </Link>
+        <div className="navbar__actions">
+          <Link
+            className="navbar__cta"
+            to="/#contact"
+            onClick={(event) => goToSection(event, 'contact', '/#contact')}
+          >
+            Get Consulting
+            {arrow}
+          </Link>
 
-        <button
-          type="button"
-          className={`navbar__toggle${open ? ' navbar__toggle--open' : ''}`}
-          aria-expanded={open}
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          onClick={() => setOpen((value) => !value)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+          <button
+            type="button"
+            className={`navbar__toggle${open ? ' navbar__toggle--open' : ''}`}
+            aria-expanded={open}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            onClick={() => setOpen((value) => !value)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
       </div>
     </header>
   )
