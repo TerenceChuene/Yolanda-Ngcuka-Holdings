@@ -33,9 +33,10 @@ export default function Footer() {
               environmental consulting firm specialising in mining regulatory
               compliance and sustainable environmental management.
             </p>
+            <p className="footer__reg">Reg: 2023/242150/07</p>
             <p className="footer__est">
               <span className="footer__dot" aria-hidden="true" />
-              Est. 2023 · Newcastle, SA
+              Est. 2023 · Springs, SA
             </p>
           </div>
 
@@ -65,9 +66,11 @@ export default function Footer() {
             <h2 className="footer__heading">Contact Us</h2>
             <ul className="footer__contact">
               <li>
-                <a href="mailto:yolandangcukaholdings@gmail.com">
-                  yolandangcukaholdings@gmail.com
-                </a>
+                <span className="footer__muted">Contact Person</span>
+                <span className="footer__text">Mashudu Randela</span>
+              </li>
+              <li>
+                <a href="mailto:yola.ngcuka@icloud.com">yola.ngcuka@icloud.com</a>
               </li>
               <li>
                 <a className="footer__phone" href="tel:+27673675219">
@@ -88,13 +91,43 @@ export default function Footer() {
                   067 367 5219
                 </a>
               </li>
+              <li>
+                <a className="footer__phone" href="tel:+27812788873">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M7.5 4.5h3l1.2 3.2-1.8 1.2a11 11 0 0 0 5.2 5.2l1.2-1.8 3.2 1.2v3a1.5 1.5 0 0 1-1.6 1.5A14.5 14.5 0 0 1 4.5 6.1a1.5 1.5 0 0 1 1.5-1.6h1.5z"
+                      stroke="currentColor"
+                      strokeWidth="1.7"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  081 278 8873
+                </a>
+              </li>
+              <li>
+                <address className="footer__address">
+                  Alexandra View Unit 23
+                  <br />
+                  1 Titanium Avenue
+                  <br />
+                  Dersley, Springs
+                  <br />
+                  1569
+                </address>
+              </li>
             </ul>
           </div>
         </div>
 
         <div className="footer__bottom">
           <p>© 2026 Yolanda Ngcuka Holdings (Pty) Ltd. All rights reserved.</p>
-          <p>Registered Environmental Consulting Firm - South Africa</p>
+          <p>Reg: 2023/242150/07 · Registered Environmental Consulting Firm</p>
         </div>
       </div>
     </footer>

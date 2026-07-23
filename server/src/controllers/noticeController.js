@@ -1,7 +1,10 @@
-import fs from 'fs'
 import path from 'path'
 import { Notice } from '../models/Notice.js'
-import { getExtension, uploadsDir } from '../middleware/upload.js'
+import { getExtension, buildStoredFilename } from '../middleware/upload.js'
+import {
+  storeFile,
+  deleteStoredFile,
+} from '../storage/files.js'
 
 const VALID_DURATIONS = new Set([30, 60])
 
@@ -11,13 +14,6 @@ function calculateExpiresAt(days) {
   return expires
 }
 
-function removeUploadedFile(filePath) {
-  if (!filePath) return
-  fs.promises.unlink(filePath).catch(() => {
-    // File may already be gone; ignore
-  })
-}
-
 /** POST /api/notices — create notice with file upload */
 export async function createNotice(req, res) {
   try {
@@ -25,34 +21,36 @@ export async function createNotice(req, res) {
     const durationDays = Number(req.body.duration_days)
 
     if (!title) {
-      if (req.file) removeUploadedFile(req.file.path)
       return res.status(400).json({ error: 'Title is required.' })
     }
 
     if (!VALID_DURATIONS.has(durationDays)) {
-      if (req.file) removeUploadedFile(req.file.path)
       return res.status(400).json({ error: 'Duration must be 30 or 60 days.' })
     }
 
-    if (!req.file) {
+    if (!req.file?.buffer) {
       return res.status(400).json({ error: 'A file is required.' })
     }
 
     const fileType = getExtension(req.file.originalname)
-    const fileUrl = `/uploads/${req.file.filename}`
+    const filename = buildStoredFilename(req.file.originalname)
+    const stored = await storeFile({
+      buffer: req.file.buffer,
+      filename,
+      contentType: req.file.mimetype,
+    })
 
     const notice = await Notice.create({
       title,
-      file_url: fileUrl,
+      file_url: `/uploads/${filename}`,
       file_type: fileType,
-      file_path: req.file.path,
+      file_path: stored.id,
       upload_date: new Date(),
       expires_at: calculateExpiresAt(durationDays),
     })
 
     return res.status(201).json(notice)
   } catch (err) {
-    if (req.file) removeUploadedFile(req.file.path)
     console.error('createNotice error:', err)
     return res.status(500).json({ error: 'Failed to create notice.' })
   }
@@ -92,12 +90,14 @@ export async function deleteNotice(req, res) {
       return res.status(404).json({ error: 'Notice not found.' })
     }
 
-    const absolutePath = notice.file_path
-      ? notice.file_path
-      : path.join(uploadsDir, path.basename(notice.file_url))
+    const filename = path.basename(notice.file_url)
 
     await Notice.findByIdAndDelete(notice._id)
-    await removeUploadedFile(absolutePath)
+    await deleteStoredFile({
+      fileId: notice.file_path,
+      filename,
+      filePath: notice.file_path?.includes(path.sep) ? notice.file_path : null,
+    })
 
     return res.json({ message: 'Notice deleted successfully.' })
   } catch (err) {

@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
-import consultant from '../assets/consultant.png'
-import Waves from '../components/Waves'
+import heroImage from '../assets/service-monitoring.jpg'
 import './Landing.css'
 
 const arrow = (
@@ -24,19 +23,30 @@ const arrow = (
 
 export default function Landing() {
   return (
-    <main className="landing" id="home">
-      <Waves />
+    <main
+      className="landing"
+      id="home"
+      data-nav-tone="dark"
+      style={{ ['--landing-hero' as string]: `url(${heroImage})` }}
+    >
+      <div className="landing__media" aria-hidden="true" />
+      <div className="landing__veil" aria-hidden="true" />
 
       <section className="hero">
         <div className="hero__copy">
-          <h1 className="hero__title">
+          <h1 className="hero__title" data-reveal>
             <span>Promoting Responsible & Sustainable Mining</span>
             <span>Practices</span>
           </h1>
-          <p className="hero__lede">
-          A 100% black-woman-owned environmental consulting firm delivering expert regulatory compliance and sustainable solutions across the full mining lifecycle.
+          <p className="hero__lede" data-reveal>
+            A 100% black-woman-owned environmental consulting firm delivering
+            expert regulatory compliance and sustainable solutions across the
+            full mining lifecycle.
           </p>
-          <div className="hero__actions">
+          <div
+            className="hero__actions"
+            data-reveal
+          >
             <Link className="btn btn--primary" to="/#contact">
               Get Consulting
               {arrow}
@@ -46,14 +56,6 @@ export default function Landing() {
               {arrow}
             </Link>
           </div>
-        </div>
-
-        <div className="hero__visual">
-          <img
-            className="hero__portrait"
-            src={consultant}
-            alt="Yolanda Ngcuka, environmental consulting professional"
-          />
         </div>
       </section>
     </main>

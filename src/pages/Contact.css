@@ -71,7 +71,6 @@
   background: var(--surface);
   border: 2px solid var(--charcoal);
   box-shadow: 10px 10px 0 var(--gold);
-  animation: contactRise 0.85s var(--ease-out) both;
 }
 
 .contact-card__badge {
@@ -157,6 +156,15 @@
   color: var(--text-muted);
   font-weight: 500;
   word-break: break-word;
+}
+
+.contact-card__address {
+  font-style: normal;
+  line-height: 1.55;
+}
+
+.contact-card__link {
+  display: block;
 }
 
 .contact-card__link:hover {
@@ -339,17 +347,6 @@
   color: #8a1f1f;
 }
 
-@keyframes contactRise {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes contactDrift {
   from {
     transform: translateX(0);
@@ -397,7 +394,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .contact-card,
   .contact__decor--squiggle,
   .contact__decor--orb {
     animation: none;

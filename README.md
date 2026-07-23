@@ -89,7 +89,7 @@ Default admin credentials are set in `server/.env` (`ADMIN_EMAIL` / `ADMIN_PASSW
 | `POST` | `/api/notices` | Yes | Multipart upload (`title`, `duration_days` 30\|60, `file`) |
 | `DELETE` | `/api/notices/:id` | Yes | Delete notice + file from disk |
 
-Uploaded files are stored in `server/uploads/` and served at `/uploads/...`.
+Uploaded files are stored in **MongoDB GridFS** (durable across deploys) and served at `/uploads/...`. A local `server/uploads/` folder is only used as a development fallback.
 
 ## Contact form (EmailJS)
 

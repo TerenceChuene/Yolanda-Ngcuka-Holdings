@@ -1,0 +1,42 @@
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 1rem, 0);
+  transition:
+    opacity 0.55s var(--ease-out),
+    transform 0.55s var(--ease-out);
+  will-change: opacity, transform;
+}
+
+[data-reveal='left'] {
+  transform: translate3d(-1rem, 0, 0);
+}
+
+[data-reveal='right'] {
+  transform: translate3d(1rem, 0, 0);
+}
+
+[data-reveal='fade'] {
+  transform: none;
+}
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 720px) {
+  [data-reveal],
+  [data-reveal='left'],
+  [data-reveal='right'] {
+    transform: translate3d(0, 0.75rem, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+}

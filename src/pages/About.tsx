@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import aboutTeam from '../assets/about-team.png'
-import founderAvatar from '../assets/founder-avatar.png'
+import aboutTeam from '../assets/about.jpeg'
+import founderAvatar from '../assets/1.1.jpeg'
 import Waves from '../components/Waves'
 import './About.css'
 
@@ -25,10 +25,10 @@ const arrow = (
 
 export default function About() {
   return (
-    <main className="about" id="about">
+    <main className="about" id="about" data-nav-tone="light">
       <Waves side="right" />
       <section className="about__section">
-        <div className="about__media">
+        <div className="about__media" data-reveal="left">
           <div className="about__image-wrap">
             <img
               className="about__image"
@@ -37,7 +37,10 @@ export default function About() {
             />
           </div>
 
-          <aside className="about__quote">
+          <aside
+            className="about__quote"
+            data-reveal
+          >
             <div className="about__quote-head">
               <img
                 className="about__avatar"
@@ -47,21 +50,23 @@ export default function About() {
                 height={48}
               />
               <p className="about__attribution">
-                <span className="about__name">Forman Cobid</span>
-                <span className="about__role">, Founder</span>
+                <span className="about__name">Yolanda Ngcuka</span>
+                <span className="about__role">, Managing Director.</span>
               </p>
             </div>
             <p className="about__quote-text">
               <span className="about__marks" aria-hidden="true">
                 ”
               </span>
-              Grass face saw beginning meat fod creeping eaven dominion intercom
-              created behold.
+              "We are committed to providing the highest quality environmental services to our clients, ensuring that they are compliant with all relevant regulations and standards."
             </p>
           </aside>
         </div>
 
-        <div className="about__copy">
+        <div
+          className="about__copy"
+          data-reveal="right"
+        >
           <p className="about__eyebrow">About Company</p>
           <h1 className="about__title">
           Environmental Excellence, Rooted in Integrity 
@@ -77,7 +82,7 @@ Headquartered in Newcastle, KwaZulu-Natal, we serve mining operations across Sou
             
           </div>
           <div className="about__actions">
-            <Link className="about-btn" to="/services">
+            <Link className="about-btn" to="/about-page">
               Learn More
               {arrow}
             </Link>

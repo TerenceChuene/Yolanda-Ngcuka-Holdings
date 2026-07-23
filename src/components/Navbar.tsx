@@ -26,9 +26,34 @@ const links = [
 
 const SECTION_IDS = links.map((link) => link.section)
 
+type NavTone = 'light' | 'dark'
+
 function getNavOffset() {
   const nav = document.querySelector('.navbar')
   return (nav?.getBoundingClientRect().height ?? 80) + 12
+}
+
+/** Sample the section under the sticky bar and read its declared nav tone. */
+function toneFromScroll(): NavTone {
+  const nav = document.querySelector('.navbar')
+  const probeY = (nav?.getBoundingClientRect().bottom ?? 80) + 1
+  const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-nav-tone]'))
+  let tone: NavTone = 'light'
+
+  sections.forEach((el) => {
+    const rect = el.getBoundingClientRect()
+    if (rect.top <= probeY && rect.bottom > probeY) {
+      const value = el.dataset.navTone
+      if (value === 'dark' || value === 'light') tone = value
+    }
+  })
+
+  return tone
+}
+
+function syncNavHeightVar(nav: HTMLElement) {
+  const height = Math.ceil(nav.getBoundingClientRect().height)
+  document.documentElement.style.setProperty('--nav-height', `${height}px`)
 }
 
 /** Scroll so the section top sits just below the sticky navbar. */
@@ -65,8 +90,14 @@ export default function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
+  const [tone, setTone] = useState<NavTone>(() =>
+    typeof window !== 'undefined' && window.location.pathname === '/' && !window.location.hash
+      ? 'dark'
+      : 'light',
+  )
   const [activeSection, setActiveSection] = useState<(typeof SECTION_IDS)[number]>('home')
   const skipHashScroll = useRef(false)
+  const navRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     setOpen(false)
@@ -98,14 +129,22 @@ export default function Navbar() {
   }, [location.pathname, location.hash])
 
   useEffect(() => {
-    if (location.pathname !== '/') return
+    const nav = navRef.current
+    if (!nav) return
 
     let frame = 0
 
     function update() {
       cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => {
-        setActiveSection(sectionFromScroll())
+        // Keep --nav-height stable while the mobile menu is expanded.
+        if (navRef.current && !navRef.current.classList.contains('navbar--open')) {
+          syncNavHeightVar(navRef.current)
+        }
+        setTone(toneFromScroll())
+        if (location.pathname === '/') {
+          setActiveSection(sectionFromScroll())
+        }
       })
     }
 
@@ -113,12 +152,21 @@ export default function Navbar() {
     window.addEventListener('scroll', update, { passive: true })
     window.addEventListener('resize', update)
 
+    const resizeObserver = new ResizeObserver(update)
+    resizeObserver.observe(nav)
+
     return () => {
       cancelAnimationFrame(frame)
       window.removeEventListener('scroll', update)
       window.removeEventListener('resize', update)
+      resizeObserver.disconnect()
     }
-  }, [location.pathname])
+  }, [location.pathname, location.hash])
+
+  // Re-sample tone when the menu opens/closes (height changes the probe line).
+  useEffect(() => {
+    setTone(toneFromScroll())
+  }, [open])
 
   function isLinkActive(section: string) {
     if (location.pathname === `/${section}`) return true
@@ -156,7 +204,11 @@ export default function Navbar() {
   }
 
   return (
-    <header className="navbar">
+    <header
+      ref={navRef}
+      className={`navbar navbar--on-${tone}${open ? ' navbar--open' : ''}`}
+      data-tone={tone}
+    >
       <div className="navbar__inner">
         <Logo variant="navbar" />
 

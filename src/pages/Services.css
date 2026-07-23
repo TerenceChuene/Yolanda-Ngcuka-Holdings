@@ -22,7 +22,6 @@
   gap: clamp(1.5rem, 4vw, 3.5rem);
   align-items: end;
   margin-bottom: clamp(2.25rem, 5vh, 3.25rem);
-  animation: servicesRise 0.85s var(--ease-out) both;
 }
 
 .services__eyebrow {
@@ -72,20 +71,6 @@
     background-color 0.35s var(--ease-out),
     transform 0.35s var(--ease-out),
     box-shadow 0.35s var(--ease-out);
-  animation: servicesRise 0.85s var(--ease-out) both;
-}
-
-.services__grid li:nth-child(1) .service-card {
-  animation-delay: 0.08s;
-}
-.services__grid li:nth-child(2) .service-card {
-  animation-delay: 0.14s;
-}
-.services__grid li:nth-child(3) .service-card {
-  animation-delay: 0.2s;
-}
-.services__grid li:nth-child(4) .service-card {
-  animation-delay: 0.26s;
 }
 
 .service-card:hover,
@@ -155,7 +140,6 @@
   display: flex;
   justify-content: center;
   margin-top: clamp(2rem, 4.5vh, 3rem);
-  animation: servicesRise 0.85s var(--ease-out) 0.3s both;
 }
 
 .services__browse {
@@ -192,17 +176,6 @@
   transform: translate(2px, -2px);
 }
 
-@keyframes servicesRise {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @media (max-width: 980px) {
   .services__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -237,14 +210,170 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .services__header,
-  .service-card,
-  .services__cta {
-    animation: none;
-  }
-
   .service-card:hover,
   .service-card:focus-visible {
     transform: none;
+  }
+}
+
+.services--page {
+  overflow: visible;
+}
+
+.services__band {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.services__band--cta {
+  background: var(--surface);
+}
+
+.services__section--page {
+  border-bottom: none;
+  padding-bottom: clamp(2rem, 5vh, 3rem);
+}
+
+.services__detail {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.services__detail--alt {
+  background: var(--bg-earth);
+}
+
+.services__detail-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  align-items: center;
+  gap: clamp(1.75rem, 4vw, 3.25rem);
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(3rem, 7vh, 4.5rem) clamp(1.5rem, 5vw, 4rem);
+}
+
+.services__detail--reverse .services__detail-inner {
+  grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr);
+}
+
+.services__detail--reverse .services__detail-media {
+  order: 2;
+}
+
+.services__detail--reverse .services__detail-copy {
+  order: 1;
+}
+
+.services__detail-media {
+  min-width: 0;
+  width: 100%;
+  max-width: 340px;
+  justify-self: start;
+}
+
+.services__detail--reverse .services__detail-media {
+  justify-self: end;
+}
+
+.services__detail-image-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  aspect-ratio: 5 / 4;
+  max-height: 280px;
+  background: var(--charcoal);
+}
+
+.services__detail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.services__detail-copy {
+  max-width: 34rem;
+  min-width: 0;
+}
+
+.services__detail-title {
+  max-width: 22ch;
+  margin-top: 0.35rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 2.8vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.services__detail-list {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+  max-width: 48rem;
+}
+
+.services__detail-list li {
+  position: relative;
+  padding-left: 1.35rem;
+  font-size: clamp(0.92rem, 1.2vw, 1rem);
+  line-height: 1.65;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.services__detail-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.services__band--cta .services__cta {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: clamp(2.5rem, 6vh, 3.5rem) clamp(1.5rem, 5vw, 4rem);
+}
+
+@media (max-width: 900px) {
+  .services__detail-inner,
+  .services__detail--reverse .services__detail-inner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .services__detail--reverse .services__detail-media,
+  .services__detail--reverse .services__detail-copy {
+    order: initial;
+  }
+
+  .services__detail-media {
+    max-width: 400px;
+    justify-self: start;
+  }
+
+  .services__detail--reverse .services__detail-media {
+    justify-self: start;
+  }
+
+  .services__detail-image-wrap {
+    aspect-ratio: 16 / 10;
+    max-height: 240px;
+  }
+
+  .services__detail-copy {
+    max-width: 100%;
   }
 }

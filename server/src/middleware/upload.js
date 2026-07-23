@@ -4,6 +4,7 @@ import multer from 'multer'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+/** Local disk fallback (dev / legacy uploads only). Production uses GridFS. */
 export const uploadsDir = path.join(__dirname, '../../uploads')
 
 if (!fs.existsSync(uploadsDir)) {
@@ -23,16 +24,8 @@ function getExtension(filename) {
   return path.extname(filename).slice(1).toLowerCase()
 }
 
-const storage = multer.diskStorage({
-  destination(_req, _file, cb) {
-    cb(null, uploadsDir)
-  },
-  filename(_req, file, cb) {
-    const ext = getExtension(file.originalname)
-    const unique = `${Date.now()}-${Math.round(Math.random() * 1e9)}`
-    cb(null, `${unique}.${ext}`)
-  },
-})
+/** Memory storage — files are persisted to MongoDB GridFS after upload. */
+const storage = multer.memoryStorage()
 
 function fileFilter(_req, file, cb) {
   const ext = getExtension(file.originalname)
@@ -48,5 +41,11 @@ export const upload = multer({
   fileFilter,
   limits: { fileSize: 10 * 1024 * 1024 },
 })
+
+export function buildStoredFilename(originalname) {
+  const ext = getExtension(originalname)
+  const unique = `${Date.now()}-${Math.round(Math.random() * 1e9)}`
+  return `${unique}.${ext}`
+}
 
 export { getExtension, ALLOWED_EXTENSIONS }

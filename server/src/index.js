@@ -9,7 +9,7 @@ import { connectDB } from './config/db.js'
 import { ensureBootstrapAdmin } from './controllers/authController.js'
 import noticesRouter from './routes/notices.js'
 import authRouter from './routes/auth.js'
-import { uploadsDir } from './middleware/upload.js'
+import { sendStoredFile, migrateDiskUploadsToGridFS } from './storage/files.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express()
@@ -25,7 +25,10 @@ app.use(
   }),
 )
 app.use(express.json())
-app.use('/uploads', express.static(uploadsDir))
+// Files live in MongoDB GridFS (durable across deploys); disk is fallback only.
+app.get('/uploads/:filename', (req, res) => {
+  sendStoredFile(req.params.filename, res)
+})
 app.use('/api/auth', authRouter)
 app.use('/api/notices', noticesRouter)
 
@@ -71,6 +74,7 @@ async function start() {
   }
 
   await connectDB(uri)
+  await migrateDiskUploadsToGridFS()
   await ensureBootstrapAdmin()
   await mountClient()
   mountErrorHandler()
@@ -78,7 +82,7 @@ async function start() {
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
     console.log(`Client is running on port ${CLIENT_ORIGIN}`)
-    console.log(`Uploads are served from ${path.resolve(__dirname, '../uploads')}`)
+    console.log('Uploads are served from MongoDB GridFS at /uploads/:filename')
     console.log(`Notices API is running on http://localhost:${PORT}/api/notices`)
     console.log(`Auth API is running on http://localhost:${PORT}/api/auth`)
     console.log(`Health check is running on http://localhost:${PORT}/api/health`)

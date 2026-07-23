@@ -57,10 +57,10 @@ export default function Contact() {
   }
 
   return (
-    <main className="contact" id="contact">
+    <main className="contact" id="contact" data-nav-tone="light">
       <Waves side="right" />
       <section className="contact__section">
-        <header className="services__header">
+        <header className="services__header" data-reveal>
           <div className="services__intro">
             <p className="services__eyebrow">Our Services</p>
             <h1 className="services__title">
@@ -68,11 +68,59 @@ export default function Contact() {
             </h1>
           </div>
         </header>
-        <div className="contact-card">
+        <div className="contact-card" data-reveal>
           <div className="contact-card__info">
             <div className="contact-card__office">
-              <h2 className="contact-card__office-title">Our Office</h2>
+              <h2 className="contact-card__office-title">Company Information</h2>
               <ul className="contact-card__details">
+                <li>
+                  <span className="contact-card__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M4 20V6.5L12 3l8 3.5V20"
+                        stroke="currentColor"
+                        strokeWidth="1.6"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M9 20v-6h6v6M9 10h.01M15 10h.01M12 10h.01"
+                        stroke="currentColor"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <p className="contact-card__label">Company Name</p>
+                    <p className="contact-card__value">
+                      Yolanda Ngcuka Holdings
+                    </p>
+                    <p className="contact-card__value">Reg: 2023/242150/07</p>
+                  </div>
+                </li>
+                <li>
+                  <span className="contact-card__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <circle
+                        cx="12"
+                        cy="8"
+                        r="3.2"
+                        stroke="currentColor"
+                        strokeWidth="1.6"
+                      />
+                      <path
+                        d="M5 19.5c1.2-3.2 3.5-4.8 7-4.8s5.8 1.6 7 4.8"
+                        stroke="currentColor"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <p className="contact-card__label">Contact Person</p>
+                    <p className="contact-card__value">Mashudu Randela</p>
+                  </div>
+                </li>
                 <li>
                   <span className="contact-card__icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none">
@@ -91,8 +139,18 @@ export default function Contact() {
                     </svg>
                   </span>
                   <div>
-                    <p className="contact-card__label">Location</p>
-                    <p className="contact-card__value">South Africa</p>
+                    <p className="contact-card__label">Physical Address</p>
+                    <address className="contact-card__value contact-card__address">
+                      Alexandra View Unit 23
+                      <br />
+                      1 Titanium Avenue
+                      <br />
+                      Dersley
+                      <br />
+                      Springs
+                      <br />
+                      1569
+                    </address>
                   </div>
                 </li>
                 <li>
@@ -119,9 +177,9 @@ export default function Contact() {
                     <p className="contact-card__label">Email</p>
                     <a
                       className="contact-card__value contact-card__link"
-                      href="mailto:yolandangcukaholdings@gmail.com"
+                      href="mailto:yola.ngcuka@icloud.com"
                     >
-                      yolandangcukaholdings@gmail.com
+                      yola.ngcuka@icloud.com
                     </a>
                   </div>
                 </li>
@@ -137,12 +195,18 @@ export default function Contact() {
                     </svg>
                   </span>
                   <div>
-                    <p className="contact-card__label">Phone</p>
+                    <p className="contact-card__label">Contact</p>
                     <a
                       className="contact-card__value contact-card__link"
                       href="tel:+27673675219"
                     >
                       067 367 5219
+                    </a>
+                    <a
+                      className="contact-card__value contact-card__link"
+                      href="tel:+27812788873"
+                    >
+                      081 278 8873
                     </a>
                   </div>
                 </li>

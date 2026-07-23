@@ -20,11 +20,23 @@ export const pageSeo: Record<string, PageSeo> = {
       'Established in 2023 in Newcastle, KZN — a 100% black-woman-owned firm delivering environmental management and regulatory compliance for mining across South Africa.',
     path: '/about',
   },
+  '/about-page': {
+    title: `About Us | ${SITE_NAME}`,
+    description:
+      'Established in 2023 in Newcastle, KZN — a 100% black-woman-owned firm delivering environmental management and regulatory compliance for mining across South Africa.',
+    path: '/about-page',
+  },
   '/services': {
     title: `Services | ${SITE_NAME}`,
     description:
       'Environmental management, audits & compliance, monitoring programmes, and rehabilitation & closure planning for mining operations.',
     path: '/services',
+  },
+  '/services-page': {
+    title: `Core Services | ${SITE_NAME}`,
+    description:
+      'Authorisation services, environmental audits and compliance, monitoring programmes, and rehabilitation and closure planning for mining projects.',
+    path: '/services-page',
   },
   '/team': {
     title: `Our Team | ${SITE_NAME}`,
@@ -58,9 +70,16 @@ export const pageSeo: Record<string, PageSeo> = {
   },
 }
 
+const notFoundSeo: PageSeo = {
+  title: `Page Not Found | ${SITE_NAME}`,
+  description: 'The page you requested could not be found.',
+  path: '/',
+  noIndex: true,
+}
+
 export function resolvePageSeo(pathname: string): PageSeo {
   if (pathname.startsWith('/admin')) {
     return pageSeo[pathname] ?? pageSeo['/admin']
   }
-  return pageSeo[pathname] ?? pageSeo['/']
+  return pageSeo[pathname] ?? notFoundSeo
 }

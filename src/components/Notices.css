@@ -25,7 +25,6 @@
   justify-content: space-between;
   gap: 1.25rem 2rem;
   margin-bottom: clamp(2rem, 4.5vh, 3rem);
-  animation: noticesRise 0.8s var(--ease-out) both;
 }
 
 .notices__heading {
@@ -92,10 +91,6 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(1.25rem, 3vw, 2rem);
-}
-
-.notices__item {
-  animation: noticesRise 0.8s var(--ease-out) both;
 }
 
 .notice-card {
@@ -204,17 +199,6 @@
 
 .notice-card:hover .notice-card__title {
   color: var(--accent-orange);
-}
-
-@keyframes noticesRise {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @media (max-width: 900px) {

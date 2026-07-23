@@ -77,15 +77,20 @@ export default function Projects() {
     active === 'all' ? projects : projects.filter((p) => p.category === active)
 
   return (
-    <main className="projects" id="projects">
+    <main className="projects" id="projects" data-nav-tone="light">
       <Waves />
       <section className="projects__section">
-        <header className="projects__header">
+        <header className="projects__header" data-reveal>
           <p className="projects__eyebrow">Project &amp; Case Studies</p>
           <h1 className="projects__title">Our Environmental Projects</h1>
         </header>
 
-        <div className="projects__filters" role="tablist" aria-label="Project categories">
+        <div
+          className="projects__filters"
+          role="tablist"
+          aria-label="Project categories"
+          data-reveal
+        >
           {filters.map((filter) => (
             <button
               key={filter.id}
@@ -108,7 +113,7 @@ export default function Projects() {
               <li
                 key={project.id}
                 className="project-card"
-                style={{ animationDelay: `${0.08 + index * 0.06}s` }}
+                data-reveal
               >
                 <article>
                   <div className="project-card__media">
@@ -141,7 +146,7 @@ export default function Projects() {
           })}
         </ul>
 
-        <div className="projects__cta">
+        <div className="projects__cta" data-reveal>
           <button
             type="button"
             className="projects__all"

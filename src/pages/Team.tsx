@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useState, type ReactNode } from 'react'
 import Waves from '../components/Waves'
 import './Team.css'
 
@@ -14,148 +15,235 @@ const arrow = (
   </svg>
 )
 
-const credentials = [
+type Credential = {
+  label: string
+  detail: string
+}
+
+type TeamMember = {
+  index: string
+  initials: string
+  name: string
+  role: string
+  discipline: string
+  focus: string[]
+  bio: ReactNode
+  credentials: Credential[]
+}
+
+const teamMembers: TeamMember[] = [
   {
-    title: '16+ Years',
-    subtitle: 'Industry Experience',
-    tone: 'navy',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M8 7V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1M4 7h16v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7z"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M4 12h16"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-        />
-      </svg>
+    index: '01',
+    initials: 'YN',
+    name: 'Yolanda Ngcuka',
+    role: 'Managing Director',
+    discipline: 'Environmental Scientist',
+    focus: ['Regulatory Compliance', 'Mining Lifecycle'],
+    bio: (
+      <>
+        With over 16 years of experience in environmental science and mining
+        regulatory compliance, <strong>Yolanda Ngcuka</strong> brings
+        unparalleled expertise to every project. Her deep understanding of South
+        Africa&apos;s environmental legislation, combined with hands-on field
+        experience, ensures that clients receive technically sound and legally
+        compliant solutions.
+      </>
     ),
+    credentials: [
+      { label: '16+ Years', detail: 'Industry Experience' },
+      { label: 'Environmental Science', detail: 'Professional Qualification' },
+      { label: 'SACNASP', detail: 'Registered Natural Scientist' },
+      { label: 'EAPASA', detail: 'Registered EAP' },
+    ],
   },
   {
-    title: 'Environmental Science',
-    subtitle: 'Professional Qualification',
-    tone: 'teal',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M4 5.5C7 4 10 4 12 5.5C14 4 17 4 20 5.5V18.5C17 17 14 17 12 18.5C10 17 7 17 4 18.5V5.5Z"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M12 5.5V18.5"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-        />
-      </svg>
+    index: '02',
+    initials: 'MR',
+    name: 'Mashudu Randela',
+    role: 'Environmental Specialist',
+    discipline: 'EIAs & Compliance Monitoring',
+    focus: ['EIA Applications', 'Stakeholder Engagement'],
+    bio: (
+      <>
+        An Environmental Specialist with over 5 years of experience, including 3
+        years in the private sector and 2 years in the public sector, focusing
+        on Environmental Impact Assessments (EIAs), compliance monitoring, and
+        stakeholder engagement. Skilled in managing EIA applications, drafting
+        environmental authorisations, and conducting site inspections to ensure
+        compliance with legislation and client requirements. Experienced in
+        preparing detailed environmental reports, advisory notes, and management
+        documentation to support project approvals and business objectives.
+        Demonstrates proven ability to collaborate effectively with regulators,
+        stakeholders, and communities while promoting sustainable development and
+        operational efficiency. Holds an Honours Degree in Environmental Sciences
+        and Resource Studies from the University of Limpopo (2019) and has
+        completed a Course in Biodiversity. Currently in the process of
+        registering with EAPASA to strengthen professional credibility as an
+        Environmental Assessment Practitioner.
+      </>
     ),
+    credentials: [
+      { label: '5+ Years', detail: 'Industry Experience' },
+      {
+        label: 'Honours Degree',
+        detail: 'Environmental Sciences & Resource Studies',
+      },
+      { label: 'Biodiversity', detail: 'Specialist Course Completed' },
+      { label: 'EAPASA', detail: 'Registration In Progress' },
+    ],
   },
   {
-    title: 'SACNASP',
-    subtitle: 'Registered Natural Scientist',
-    tone: 'gold',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <circle cx="12" cy="12" r="8.25" stroke="currentColor" strokeWidth="1.6" />
-        <circle cx="12" cy="12" r="5.5" stroke="currentColor" strokeWidth="1.4" />
-        <path
-          d="M9.5 12.2l1.7 1.7 3.4-3.6"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+    index: '03',
+    initials: 'PK',
+    name: 'Pogisho Kgasago',
+    role: 'Ecologist',
+    discipline: 'Ecological Assessments',
+    focus: ['Biodiversity', 'Habitat Surveys'],
+    bio: (
+      <>
+        A qualified Ecologist with a Bachelor&apos;s degree in Life Sciences from
+        the University of Johannesburg and an Honours degree in Environmental
+        Management. She has 4 years of experience in ecological assessments,
+        biodiversity monitoring, and environmental management, specialising in
+        habitat assessments, species surveys, and ecological reporting. Pogisho
+        is skilled in applying ecological principles to support Environmental
+        Impact Assessments, rehabilitation planning, and compliance monitoring.
+        She demonstrates strong analytical, problem-solving, and stakeholder
+        engagement skills, contributing to sustainable environmental management
+        practices across various projects. Pogisho is a registered professional
+        with SACNASP (South African Council for Natural Scientific Professions)
+        as Ecologist.
+      </>
     ),
+    credentials: [
+      { label: '4 Years', detail: 'Ecological Experience' },
+      { label: 'Honours Degree', detail: 'Environmental Management' },
+      { label: 'SACNASP', detail: 'Registered Ecologist' },
+      { label: 'BSc Life Sciences', detail: 'University of Johannesburg' },
+    ],
   },
   {
-    title: 'EAPASA',
-    subtitle: 'Registered EAP',
-    tone: 'gold',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M12 3l2.1 4.3 4.7.7-3.4 3.3.8 4.7L12 13.9 7.8 16l.8-4.7L5.2 8l4.7-.7L12 3z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M9.5 16.5V20l2.5-1.4L14.5 20v-3.5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+    index: '04',
+    initials: 'MM',
+    name: 'Marcia Mphaphul',
+    role: 'Senior Environmental Practitioner',
+    discipline: 'EIAs & Environmental Authorisations',
+    focus: ['Authorisations', 'Compliance'],
+    bio: (
+      <>
+        A Senior Environmental Practitioner with 10 years of experience in the
+        environmental management industry, specialising in Environmental Impact
+        Assessments, compliance monitoring, and environmental authorisations.
+        Holds a BSc in Environmental Science from the University of Venda and is
+        a registered professional with EAPASA, ensuring adherence to professional
+        standards and credibility. Skilled in preparing environmental reports,
+        managing regulatory submissions, and providing expert advice to support
+        sustainable project implementation and compliance with South African
+        environmental legislation.
+      </>
     ),
+    credentials: [
+      { label: '10 Years', detail: 'Industry Experience' },
+      { label: 'BSc Environmental Science', detail: 'University of Venda' },
+      { label: 'EAPASA', detail: 'Registered Professional' },
+      { label: 'Authorisations', detail: 'EIA & Compliance Specialist' },
+    ],
   },
 ]
 
 export default function Team() {
+  const [expanded, setExpanded] = useState<string | null>(null)
+
   return (
-    <main className="team" id="team">
+    <main className="team" id="team" data-nav-tone="light">
       <div className="team__backdrop" aria-hidden="true" />
       <Waves side="right" />
 
       <section className="team__section">
-        <header className="team__header">
+        <header className="team__header" data-reveal>
           <div className="team__intro">
-            <p className="team__eyebrow">Meet Our Team</p>
-            <h1 className="team__title">Experience Team Members</h1>
+            <p className="team__eyebrow">Company Team</p>
+            <h1 className="team__title">Experienced Practitioners Behind Every Mandate</h1>
           </div>
-          <Link className="team__browse" to="/services">
-            Browse Services
-            {arrow}
-          </Link>
+          <p className="team__lede">
+            A specialist bench of environmental scientists, assessment
+            practitioners, and ecologists delivering technically sound, legally
+            compliant work across the mining lifecycle.
+          </p>
         </header>
 
-        <article className="member-card">
-          <aside className="member-card__sidebar">
-            <div className="member-card__avatar" aria-hidden="true">
-              <span>YN</span>
-            </div>
-            <h2 className="member-card__name">Yolanda Ngcuka</h2>
-            <p className="member-card__role">Managing Director</p>
-            <span className="member-card__rule" />
-            <p className="member-card__discipline">Environmental Scientist</p>
-          </aside>
-
-          <div className="member-card__body">
-            <p className="member-card__bio">
-              With over 16 years of experience in environmental science and
-              mining regulatory compliance,{' '}
-              <strong>Yolanda Ngcuka</strong> brings unparalleled expertise to
-              every project. Her deep understanding of South Africa&apos;s
-              environmental legislation, combined with hands-on field
-              experience, ensures that clients receive technically sound and
-              legally compliant solutions.
-            </p>
-
-            <ul className="member-card__ creds">
-              {credentials.map((item) => (
-                <li
-                  key={item.title}
-                  className={`member-cred member-cred--${item.tone}`}
+        <ul className="team__roster">
+          {teamMembers.map((member, index) => {
+            const isOpen = expanded === member.name
+            return (
+              <li
+                key={member.name}
+                data-reveal
+              >
+                <article
+                  className={`member${isOpen ? ' member--open' : ''}`}
                 >
-                  <span className="member-cred__icon">{item.icon}</span>
-                  <div>
-                    <p className="member-cred__title">{item.title}</p>
-                    <p className="member-cred__subtitle">{item.subtitle}</p>
+                  <button
+                    type="button"
+                    className="member__toggle"
+                    aria-expanded={isOpen}
+                    onClick={() =>
+                      setExpanded(isOpen ? null : member.name)
+                    }
+                  >
+                    <span className="member__index" aria-hidden="true">
+                      {member.index}
+                    </span>
+
+                    <span className="member__monogram" aria-hidden="true">
+                      {member.initials}
+                    </span>
+
+                    <span className="member__identity">
+                      <span className="member__name">{member.name}</span>
+                      <span className="member__role">{member.role}</span>
+                      <span className="member__discipline">
+                        {member.discipline}
+                      </span>
+                    </span>
+
+                    <span className="member__focus">
+                      {member.focus.map((item) => (
+                        <span key={item} className="member__tag">
+                          {item}
+                        </span>
+                      ))}
+                    </span>
+
+                    <span className="member__action">
+                      {isOpen ? 'Close' : 'Profile'}
+                      {arrow}
+                    </span>
+                  </button>
+
+                  <div
+                    className="member__panel"
+                    hidden={!isOpen}
+                  >
+                    <p className="member__bio">{member.bio}</p>
+                    <ul className="member__creds">
+                      {member.credentials.map((item) => (
+                        <li key={`${member.name}-${item.label}`}>
+                          <p className="member__cred-label">{item.label}</p>
+                          <p className="member__cred-detail">{item.detail}</p>
+                        </li>
+                      ))}
+                    </ul>
+                    <Link className="member__cta" to="/#contact">
+                      Enquire with this specialist
+                      {arrow}
+                    </Link>
                   </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </article>
+                </article>
+              </li>
+            )
+          })}
+        </ul>
       </section>
     </main>
   )

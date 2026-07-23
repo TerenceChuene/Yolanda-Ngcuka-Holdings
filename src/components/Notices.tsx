@@ -59,7 +59,7 @@ export default function Notices() {
 
   if (loading) {
     return (
-      <section className="notices" id="notices" aria-busy="true">
+      <section className="notices" id="notices" data-nav-tone="light" aria-busy="true">
         <div className="notices__inner">
           <p className="notices__status">Loading notices…</p>
         </div>
@@ -72,10 +72,10 @@ export default function Notices() {
   }
 
   return (
-    <section className="notices" id="notices">
+    <section className="notices" id="notices" data-nav-tone="light">
       <Waves />
       <div className="notices__inner">
-        <header className="notices__header">
+        <header className="notices__header" data-reveal>
           <div className="notices__heading">
             <p className="notices__eyebrow">Notices & Updates</p>
             <h2 className="notices__title">Official public notices & documents</h2>
@@ -94,7 +94,7 @@ export default function Notices() {
               <li
                 key={notice.id}
                 className="notices__item"
-                style={{ animationDelay: `${0.06 + index * 0.06}s` }}
+                data-reveal
               >
                 <a
                   className="notice-card"
