@@ -39,8 +39,8 @@ app.get('/api/health', (_req, res) => {
   res.json({ ok: true })
 })
 
-/** Vercel Cron hits this to keep MongoDB Atlas from pausing. */
-app.get('/api/cron/keep-alive', async (req, res) => {
+/** External schedulers (e.g. GitHub Actions) hit this to keep MongoDB Atlas active. */
+app.get('/api/keep-alive', async (req, res) => {
   const secret = process.env.CRON_SECRET
   if (secret) {
     const auth = req.headers.authorization

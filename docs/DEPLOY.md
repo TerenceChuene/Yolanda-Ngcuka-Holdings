@@ -53,11 +53,11 @@ In **Project → Settings → Environment Variables**, add the following for **P
 | `ADMIN_PASSWORD` | strong password | Bootstrap admin login |
 | `ADMIN_NAME` | `YNH Administrator` | Display name |
 | `CLIENT_ORIGIN` | `https://ynh.co.za` | CORS allowlist — must match the live site origin |
-| `CRON_SECRET` | long random string | Optional — auth for `/api/cron/keep-alive` (Vercel Cron) |
+| `CRON_SECRET` | long random string | Optional — auth for `/api/keep-alive` (GitHub Actions / external ping) |
 
 `PORT` is set by Vercel / the Dockerfile; you do not need to set it.
 
-MongoDB Atlas keep-alive via Vercel Cron is documented in **[MONGODB-KEEPALIVE.md](./MONGODB-KEEPALIVE.md)**.
+MongoDB Atlas keep-alive (GitHub Actions, not Vercel Cron) is documented in **[MONGODB-KEEPALIVE.md](./MONGODB-KEEPALIVE.md)**.
 
 #### Build-time (Vite — baked into the client)
 

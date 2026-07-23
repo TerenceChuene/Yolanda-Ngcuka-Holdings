@@ -1,113 +1,112 @@
-# MongoDB keep-alive (Vercel Cron)
+# MongoDB keep-alive
 
-How the app prevents a free [MongoDB Atlas](https://www.mongodb.com/atlas) cluster from pausing due to inactivity when the site is hosted on **Vercel**.
+How the app prevents a free [MongoDB Atlas](https://www.mongodb.com/atlas) cluster from pausing due to inactivity when the site is hosted on **Vercel** (Hobby / no Vercel Cron).
 
 ## Why this exists
 
-Atlas free (M0) clusters can pause after a long period with no connections. On an always-on server you could ping the database on a timer. That does **not** work on Vercel:
+Atlas free (M0) clusters can pause after a long period with no connections. An in-process timer does **not** work on Vercel:
 
-- The app runs as a container / function that **scales to zero** when idle.
-- An in-process `setInterval` dies when the instance stops.
-- The next cold start creates a new process — the old timer never fires.
+- The app scales to **zero** when idle.
+- `setInterval` dies with the instance.
+- **Vercel Cron** is not used here (requires a plan that includes cron jobs).
 
-So keep-alive must be driven by something **outside** the Node process: **Vercel Cron**, which issues an HTTP request on a schedule and wakes the app long enough to touch MongoDB.
+Keep-alive is driven by an **external HTTP request** on a schedule: wake the app, then ping MongoDB.
 
 ## How it works
 
 ```text
-Vercel Cron (daily, UTC)
+GitHub Actions (every 3 days, UTC)
         │
-        │  GET /api/cron/keep-alive
+        │  GET /api/keep-alive
         │  (+ Authorization: Bearer <CRON_SECRET> if set)
         ▼
-Express (server/src/index.js)
+Express on Vercel (server/src/index.js)
         │
         │  pingMongo()
         ▼
 MongoDB Atlas  →  db.admin().ping()
 ```
 
-1. **`vercel.json`** declares a cron that runs once per day at midnight UTC:
+1. Workflow [`.github/workflows/mongodb-keep-alive.yml`](../.github/workflows/mongodb-keep-alive.yml) runs on a schedule (`0 0 */3 * *` — every 3 days at midnight UTC) and on manual **Run workflow**.
+2. It `curl`s your live `/api/keep-alive` URL.
+3. Express calls `pingMongo()` in `server/src/config/db.js` (`admin().ping()`).
+4. Success: `{ "ok": true, "mongo": "pong" }`. Failure: `503`.
 
-   ```json
-   {
-     "crons": [
-       {
-         "path": "/api/cron/keep-alive",
-         "schedule": "0 0 * * *"
-       }
-     ]
-   }
-   ```
+Normal site traffic (notices, projects, admin) also touches MongoDB; this job covers long quiet periods.
 
-2. Vercel sends an HTTP **GET** to that path on the **production** deployment only (not preview).
+## One-time setup (GitHub)
 
-3. The handler in `server/src/index.js` calls `pingMongo()` from `server/src/config/db.js`, which runs `admin().ping()` on the open Mongoose connection.
+1. Deploy the site so `https://YOUR_DOMAIN/api/keep-alive` works.
+2. In the GitHub repo: **Settings → Secrets and variables → Actions → New repository secret**:
 
-4. Success response: `{ "ok": true, "mongo": "pong" }`. Failure: `503` with an error message.
+   | Secret | Example | Required |
+   |--------|---------|----------|
+   | `KEEP_ALIVE_URL` | `https://ynh.co.za/api/keep-alive` | Yes |
+   | `CRON_SECRET` | same value as Vercel `CRON_SECRET`, if you set one | Only if the API requires it |
 
-Daily is enough for Atlas inactivity rules and matches the **Hobby** plan limit (at most one cron run per day).
+3. Optional on Vercel: set `CRON_SECRET` (Production env) so only authorized callers can ping. Redeploy after adding it.
+4. Confirm the workflow: **Actions → MongoDB keep-alive → Run workflow**.
+
+Scheduled runs only apply after the workflow file is on the **default branch** (usually `main`).
 
 ## Files involved
 
 | File | Role |
 |------|------|
-| `vercel.json` | Cron path + schedule |
-| `server/src/index.js` | `GET /api/cron/keep-alive` route |
-| `server/src/config/db.js` | `pingMongo()` — Atlas ping |
+| `.github/workflows/mongodb-keep-alive.yml` | Schedule + `curl` |
+| `server/src/index.js` | `GET /api/keep-alive` |
+| `server/src/config/db.js` | `pingMongo()` |
 
 ## Optional: `CRON_SECRET`
 
-If `CRON_SECRET` is set in the Vercel project environment:
+If `CRON_SECRET` is set on the **Vercel** app:
 
-- The keep-alive route requires `Authorization: Bearer <CRON_SECRET>`.
-- Vercel Cron automatically sends that header when the secret is configured.
-- Requests without a valid bearer token get `401 Unauthorized`.
+- `/api/keep-alive` requires `Authorization: Bearer <CRON_SECRET>`.
+- Add the **same** value as the GitHub Actions secret `CRON_SECRET`.
 
-If `CRON_SECRET` is **not** set, the endpoint is public (anyone can trigger a ping). That is usually fine for a lightweight ping, but setting a secret is recommended in production.
+If it is unset, the endpoint is public (lightweight ping only).
 
-Add under **Project → Settings → Environment Variables** (Production):
+## Verify
 
-| Variable | Purpose |
-|----------|---------|
-| `CRON_SECRET` | Shared secret for cron auth (long random string) |
+```bash
+curl -i https://YOUR_DOMAIN/api/keep-alive
+# with secret:
+curl -i -H "Authorization: Bearer YOUR_CRON_SECRET" \
+  https://YOUR_DOMAIN/api/keep-alive
+```
 
-Redeploy after adding it so the running container sees the variable.
+Expect `200` and `{ "ok": true, "mongo": "pong" }`.
 
-## Verify after deploy
-
-1. In the Vercel dashboard: **Project → Settings → Cron Jobs** — confirm `/api/cron/keep-alive` is listed and enabled.
-2. Manually hit the endpoint (omit the secret header if `CRON_SECRET` is unset):
-
-   ```bash
-   curl -i https://YOUR_DOMAIN/api/cron/keep-alive
-   # with secret:
-   curl -i -H "Authorization: Bearer YOUR_CRON_SECRET" \
-     https://YOUR_DOMAIN/api/cron/keep-alive
-   ```
-
-   Expect `200` and `{ "ok": true, "mongo": "pong" }`.
-3. After a scheduled run, check **Deployments → Logs** (or Function / container logs) for a successful request and no keep-alive errors.
+In GitHub: **Actions** → open a keep-alive run → confirm the ping step succeeded.
 
 ## Local development
 
-Cron only runs on Vercel production. Locally you can exercise the same path:
-
 ```bash
-# with API running (npm run dev:server)
-curl http://localhost:5000/api/cron/keep-alive
+# API running (npm run dev:server)
+curl http://localhost:5000/api/keep-alive
 ```
 
-`/api/health` remains a simple liveness check and does **not** ping MongoDB.
+`/api/health` does **not** ping MongoDB.
+
+## Alternative without GitHub Actions
+
+Any free HTTP monitor can call the same URL on a schedule, for example [cron-job.org](https://cron-job.org) or [UptimeRobot](https://uptimerobot.com):
+
+- Method: `GET`
+- URL: `https://YOUR_DOMAIN/api/keep-alive`
+- Interval: every 1–3 days (or daily)
+- Header (if used): `Authorization: Bearer <CRON_SECRET>`
+
+You can disable the GitHub workflow if you prefer an external service only.
 
 ## Changing the schedule
 
-Edit the `schedule` in `vercel.json` (cron expression, UTC), then redeploy.
+Edit the `cron:` line in `.github/workflows/mongodb-keep-alive.yml` (UTC), then merge to the default branch.
 
-- Hobby: no more than **once per day**.
-- Pro: more frequent schedules are allowed if you need them.
-
-Example every 3 days at midnight UTC (if your plan allows): `"0 0 */3 * *"`.
+| Expression | Meaning |
+|------------|---------|
+| `0 0 */3 * *` | Every 3 days at 00:00 UTC (default) |
+| `0 0 * * *` | Every day at 00:00 UTC |
 
 ## Related
 

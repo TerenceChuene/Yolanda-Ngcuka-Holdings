@@ -1,0 +1,31 @@
+name: MongoDB keep-alive
+
+# Pings /api/keep-alive so Atlas free clusters do not pause.
+# Does not use Vercel Cron (not available on this project's plan).
+on:
+  schedule:
+    # Every 3 days at 00:00 UTC
+    - cron: '0 0 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping keep-alive endpoint
+        env:
+          URL: ${{ secrets.KEEP_ALIVE_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          set -euo pipefail
+          if [ -z "${URL:-}" ]; then
+            echo "Set repository secret KEEP_ALIVE_URL (e.g. https://ynh.co.za/api/keep-alive)"
+            exit 1
+          fi
+          if [ -n "${CRON_SECRET:-}" ]; then
+            curl -fsS -H "Authorization: Bearer ${CRON_SECRET}" "${URL}"
+          else
+            curl -fsS "${URL}"
+          fi
+          echo
+          echo "Keep-alive ping succeeded"

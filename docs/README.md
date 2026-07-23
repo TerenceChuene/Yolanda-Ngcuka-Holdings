@@ -20,7 +20,7 @@ Vercel deployment, custom domain / DNS, and EmailJS contact-form setup are docum
 
 ## MongoDB keep-alive
 
-On Vercel, a daily Cron pings Atlas so free clusters do not pause. See **[MONGODB-KEEPALIVE.md](./MONGODB-KEEPALIVE.md)**.
+On Vercel (no Cron), a **GitHub Actions** job pings Atlas every 3 days so free clusters do not pause. See **[MONGODB-KEEPALIVE.md](./MONGODB-KEEPALIVE.md)**.
 
 ## Setup
 
