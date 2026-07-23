@@ -60,7 +60,7 @@ export default function Services() {
         </header>
 
         <ul className="services__grid">
-          {services.map((service, index) => (
+          {services.map((service) => (
             <li
               key={service.title}
               data-reveal

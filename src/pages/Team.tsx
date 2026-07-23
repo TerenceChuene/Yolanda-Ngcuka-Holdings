@@ -173,7 +173,7 @@ export default function Team() {
         </header>
 
         <ul className="team__roster">
-          {teamMembers.map((member, index) => {
+          {teamMembers.map((member) => {
             const isOpen = expanded === member.name
             return (
               <li

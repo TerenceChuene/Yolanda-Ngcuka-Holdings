@@ -107,7 +107,7 @@ export default function Projects() {
         </div>
 
         <ul className="projects__grid">
-          {visible.map((project, index) => {
+          {visible.map((project) => {
             const isOpen = expanded === project.id
             return (
               <li

@@ -84,7 +84,7 @@ export default function Notices() {
         </header>
 
         <ul className="notices__grid">
-          {notices.map((notice, index) => {
+          {notices.map((notice) => {
             const linkProps = noticeLinkProps(notice.file_type)
             const href = noticeFileUrl(notice.file_url)
             const { day, month } = splitDate(notice.upload_date)
