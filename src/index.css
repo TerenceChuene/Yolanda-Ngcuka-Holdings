@@ -11,11 +11,11 @@
   --text: #2a2a28;
   --text-muted: #5e5b55;
 
-  /* Green */
-  --green: #3d6b4f;
-  --green-deep: #2a4d38;
-  --green-soft: #e4efe8;
-  --green-muted: #6b8f78;
+  /* Blue */
+  --blue: #3d5f7a;
+  --blue-deep: #14334d;
+  --blue-soft: #e4ebf0;
+  --blue-muted: #6b8494;
 
   /* Gold */
   --gold: #e0b85c;
@@ -24,10 +24,10 @@
   --member-gold: #c9a227;
 
   /* Accents & aliases */
-  --accent: var(--green);
-  --accent-orange: var(--green);
-  --sky: var(--green-soft);
-  --sky-soft: #edf4ef;
+  --accent: var(--blue);
+  --accent-orange: var(--blue);
+  --sky: var(--blue-soft);
+  --sky-soft: #edf1f4;
   --line: #ffffff;
 
   --font-display: 'Outfit', sans-serif;

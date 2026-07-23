@@ -117,7 +117,7 @@
   margin-top: auto;
   margin-left: auto;
   border-radius: 50%;
-  background: var(--green-deep);
+  background: var(--blue-deep);
   color: var(--surface);
   transition:
     background-color 0.35s var(--ease-out),
@@ -129,7 +129,7 @@
 .service-card:hover .service-card__action,
 .service-card:focus-visible .service-card__action {
   background: var(--surface);
-  color: var(--green-deep);
+  color: var(--blue-deep);
 }
 
 .service-card:hover .service-card__action {
@@ -161,9 +161,9 @@
 }
 
 .services__browse:hover {
-  background: var(--green-soft);
-  border-color: var(--green);
-  color: var(--green-deep);
+  background: var(--blue-soft);
+  border-color: var(--blue);
+  color: var(--blue-deep);
   transform: translateY(-2px);
   box-shadow: 0 10px 24px rgba(42, 77, 56, 0.1);
 }
@@ -337,7 +337,7 @@
   width: 0.45rem;
   height: 0.45rem;
   border-radius: 50%;
-  background: var(--green);
+  background: var(--blue);
 }
 
 .services__band--cta .services__cta {

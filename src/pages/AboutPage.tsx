@@ -1,80 +1,27 @@
-import aboutTeam from '../assets/about.jpeg'
-import aboutOverview from '../assets/about-overview.jpeg'
-import aboutOwnership from '../assets/about-ownership.jpeg'
-import founderAvatar from '../assets/1.1.jpeg'
+import aboutOverview from '../assets/optimized/about-overview.webp'
+import aboutOwnership from '../assets/optimized/about-ownership.webp'
 import Waves from '../components/Waves'
 import './About.css'
 
 export default function AboutPage() {
   return (
     <main className="about about--page" id="about" data-nav-tone="light">
-      <section className="about__band">
+      <section className="about__band" aria-labelledby="about-banner">
         <Waves side="right" />
-        <div className="about__section">
-          <div className="about__media" data-reveal="left">
-            <div className="about__image-wrap">
-              <img
-                className="about__image"
-                src={aboutTeam}
-                alt="Team collaborating around a table in a modern workspace"
-              />
+        <div className="about__band-inner">
+          <header className="about__banner" data-reveal>
+            <div className="about__banner-intro">
+              <p className="about__eyebrow">About Us</p>
+              <h1 className="about__banner-title" id="about-banner">
+                Environmental consulting for responsible mining
+              </h1>
             </div>
-
-            <aside
-              className="about__quote"
-              data-reveal
-            >
-              <div className="about__quote-head">
-                <img
-                  className="about__avatar"
-                  src={founderAvatar}
-                  alt=""
-                  width={48}
-                  height={48}
-                />
-                <p className="about__attribution">
-                  <span className="about__name">Yolanda Ngcuka</span>
-                  <span className="about__role">, Managing Director.</span>
-                </p>
-              </div>
-              <p className="about__quote-text">
-                <span className="about__marks" aria-hidden="true">
-                  ”
-                </span>
-                "We are committed to providing the highest quality environmental services to our clients, ensuring that they are compliant with all relevant regulations and standards."
-              </p>
-            </aside>
-          </div>
-
-          <div
-            className="about__copy"
-            data-reveal="right"
-          >
-            <p className="about__eyebrow">About Company</p>
-            <h1 className="about__title">
-              Environmental Excellence, Rooted in Integrity
-            </h1>
-            <div className="about__body">
-              <p>
-                Established in 2023, Yolanda Ngcuka Holdings (Pty) Ltd is a 100%
-                black-woman-owned environmental consulting firm specialising in
-                environmental management and regulatory compliance for the mining
-                sector.
-              </p>
-              <p>
-                We support projects across the full mining lifecycle—from
-                exploration and feasibility through to operations,
-                rehabilitation, and closure. Our team combines deep technical
-                expertise with an unwavering commitment to sustainable
-                development and legal compliance.
-              </p>
-              <p>
-                Headquartered in Newcastle, KwaZulu-Natal, we serve mining
-                operations across South Africa, providing the scientific rigour
-                and regulatory knowledge that responsible mining demands.
-              </p>
-            </div>
-          </div>
+            <p className="about__banner-lede">
+              Yolanda Ngcuka Holdings delivers practical
+              environmental management and regulatory compliance from
+              authorisation through rehabilitation and closure.
+            </p>
+          </header>
         </div>
       </section>
 
@@ -87,6 +34,10 @@ export default function AboutPage() {
                 className="about__feature-image"
                 src={aboutOverview}
                 alt="Environmental consultant inspecting a water structure on site"
+                width={506}
+                height={900}
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </div>
@@ -205,6 +156,10 @@ export default function AboutPage() {
                 className="about__feature-image"
                 src={aboutOwnership}
                 alt="Environmental professional conducting field monitoring on site"
+                width={675}
+                height={900}
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </div>

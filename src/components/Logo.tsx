@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import logo from '../assets/logo.png'
+import logo from '../assets/optimized/logo.webp'
 import './Logo.css'
 
 type LogoProps = {
@@ -22,6 +22,10 @@ export default function Logo({ variant = 'navbar' }: LogoProps) {
         src={logo}
         alt="Yolanda Ngcuka Holdings"
         className="brand-logo__img"
+        width={326}
+        height={200}
+        decoding="async"
+        fetchPriority={variant === 'navbar' ? 'high' : 'low'}
       />
     </Link>
   )

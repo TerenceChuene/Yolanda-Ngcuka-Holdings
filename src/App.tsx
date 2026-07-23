@@ -1,21 +1,23 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import About from './pages/About'
-import Services from './pages/Services'
-import Team from './pages/Team'
-import Projects from './pages/Projects'
-import Contact from './pages/Contact'
-import AdminLogin from './pages/admin/AdminLogin'
-import AdminDashboard from './pages/admin/AdminDashboard'
 import Home from './Home'
 import { AuthProvider } from './context/AuthContext'
-import AboutPage from './pages/AboutPage'
-import ServicesPage from './pages/ServicesPage'
-import NotFound from './pages/NotFound'
 import Seo from './seo/Seo'
 import RevealObserver from './components/RevealObserver'
+
+const About = lazy(() => import('./pages/About'))
+const Services = lazy(() => import('./pages/Services'))
+const Team = lazy(() => import('./pages/Team'))
+const Projects = lazy(() => import('./pages/Projects'))
+const Contact = lazy(() => import('./pages/Contact'))
+const AboutPage = lazy(() => import('./pages/AboutPage'))
+const ServicesPage = lazy(() => import('./pages/ServicesPage'))
+const NoticePage = lazy(() => import('./pages/NoticePage'))
+const NotFound = lazy(() => import('./pages/NotFound'))
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'))
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
 
 const PUBLIC_PATHS = new Set([
   '/',
@@ -25,6 +27,7 @@ const PUBLIC_PATHS = new Set([
   '/services-page',
   '/team',
   '/projects',
+  '/notices',
   '/contact',
 ])
 
@@ -51,20 +54,23 @@ function AppShell() {
       <ScrollToTop />
       <RevealObserver />
       {showChrome && <Navbar />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/about-page" element={<AboutPage />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/services-page" element={<ServicesPage />} />
-        <Route path="/team" element={<Team />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/*" element={<Navigate to="/admin" replace />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/about-page" element={<AboutPage />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/services-page" element={<ServicesPage />} />
+          <Route path="/team" element={<Team />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/notices" element={<NoticePage />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/*" element={<Navigate to="/admin" replace />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
       {showChrome && <Footer />}
     </>
   )

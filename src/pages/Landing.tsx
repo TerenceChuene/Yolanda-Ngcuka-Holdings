@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import heroImage from '../assets/service-monitoring.jpg'
 import './Landing.css'
 
 const arrow = (
@@ -23,13 +22,18 @@ const arrow = (
 
 export default function Landing() {
   return (
-    <main
-      className="landing"
-      id="home"
-      data-nav-tone="dark"
-      style={{ ['--landing-hero' as string]: `url(${heroImage})` }}
-    >
-      <div className="landing__media" aria-hidden="true" />
+    <main className="landing" id="home" data-nav-tone="dark">
+      <div className="landing__media" aria-hidden="true">
+        <img
+          className="landing__media-img"
+          src="/bg-1.webp"
+          alt=""
+          width={960}
+          height={1280}
+          decoding="async"
+          fetchPriority="high"
+        />
+      </div>
       <div className="landing__veil" aria-hidden="true" />
 
       <section className="hero">
@@ -43,16 +47,13 @@ export default function Landing() {
             expert regulatory compliance and sustainable solutions across the
             full mining lifecycle.
           </p>
-          <div
-            className="hero__actions"
-            data-reveal
-          >
+          <div className="hero__actions" data-reveal>
             <Link className="btn btn--primary" to="/#contact">
               Get Consulting
               {arrow}
             </Link>
             <Link className="btn btn--ghost" to="/#about">
-              Learn More
+              About our firm
               {arrow}
             </Link>
           </div>

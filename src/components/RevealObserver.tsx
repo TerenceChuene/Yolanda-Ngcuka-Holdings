@@ -37,7 +37,6 @@ export default function RevealObserver() {
         })
       },
       {
-        // Any visible pixel is enough — tall sections failed at 0.12 + negative rootMargin.
         threshold: 0,
         rootMargin: '0px 0px -8% 0px',
       },
@@ -51,33 +50,22 @@ export default function RevealObserver() {
 
     watch()
 
-    const mutations = new MutationObserver(() => watch())
-    mutations.observe(document.body, { childList: true, subtree: true })
-
-    // Safety net: anything still hidden after scrolling/resizing gets a second look.
-    const rescue = () => {
-      document.querySelectorAll<HTMLElement>(PENDING).forEach((el) => {
-        const rect = el.getBoundingClientRect()
-        const vh = window.innerHeight || document.documentElement.clientHeight
-        if (rect.top < vh && rect.bottom > 0) {
-          reveal(el)
-          observer.unobserve(el)
-        }
+    let scheduled = false
+    const scheduleWatch = () => {
+      if (scheduled) return
+      scheduled = true
+      requestAnimationFrame(() => {
+        scheduled = false
+        watch()
       })
     }
 
-    window.addEventListener('scroll', rescue, { passive: true })
-    window.addEventListener('resize', rescue)
-
-    // Catch above-the-fold content on the next frame.
-    const frame = requestAnimationFrame(rescue)
+    const mutations = new MutationObserver(scheduleWatch)
+    mutations.observe(document.body, { childList: true, subtree: true })
 
     return () => {
-      cancelAnimationFrame(frame)
       mutations.disconnect()
       observer.disconnect()
-      window.removeEventListener('scroll', rescue)
-      window.removeEventListener('resize', rescue)
     }
   }, [location.pathname])
 

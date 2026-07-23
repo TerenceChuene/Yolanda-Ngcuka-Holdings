@@ -85,7 +85,7 @@
 }
 
 .member--open {
-  background: var(--green-deep);
+  background: var(--blue-deep);
   color: var(--surface);
 }
 
@@ -112,7 +112,7 @@
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: var(--green-muted);
+  color: var(--blue-muted);
   transition: color 0.35s var(--ease-out);
 }
 
@@ -130,7 +130,7 @@
   font-weight: 700;
   letter-spacing: 0.02em;
   line-height: 1;
-  color: var(--green-deep);
+  color: var(--blue-deep);
   border-right: 1.5px solid var(--bg-earth);
   padding-right: clamp(0.85rem, 2vw, 1.35rem);
   transition:
@@ -168,7 +168,7 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--green);
+  color: var(--blue);
   transition: color 0.35s var(--ease-out);
 }
 
@@ -201,8 +201,8 @@
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: var(--green-deep);
-  background: var(--green-soft);
+  color: var(--blue-deep);
+  background: var(--blue-soft);
   transition:
     background-color 0.35s var(--ease-out),
     border-color 0.35s var(--ease-out),

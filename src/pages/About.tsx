@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import aboutTeam from '../assets/about.jpeg'
-import founderAvatar from '../assets/1.1.jpeg'
+import aboutTeam from '../assets/optimized/about-team.webp'
+import founderAvatar from '../assets/optimized/founder-avatar.webp'
 import Waves from '../components/Waves'
 import './About.css'
 
@@ -34,6 +34,10 @@ export default function About() {
               className="about__image"
               src={aboutTeam}
               alt="Team collaborating around a table in a modern workspace"
+              width={750}
+              height={1000}
+              loading="lazy"
+              decoding="async"
             />
           </div>
 
@@ -46,8 +50,10 @@ export default function About() {
                 className="about__avatar"
                 src={founderAvatar}
                 alt=""
-                width={48}
-                height={48}
+                width={96}
+                height={72}
+                loading="lazy"
+                decoding="async"
               />
               <p className="about__attribution">
                 <span className="about__name">Yolanda Ngcuka</span>
@@ -83,7 +89,7 @@ Headquartered in Newcastle, KwaZulu-Natal, we serve mining operations across Sou
           </div>
           <div className="about__actions">
             <Link className="about-btn" to="/about-page">
-              Learn More
+              About Yolanda Ngcuka Holdings
               {arrow}
             </Link>
             

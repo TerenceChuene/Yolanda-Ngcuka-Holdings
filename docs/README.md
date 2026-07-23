@@ -18,6 +18,10 @@ For production builds, set `VITE_SITE_URL` to your live origin (no trailing slas
 
 Vercel deployment, custom domain / DNS, and EmailJS contact-form setup are documented in **[DEPLOY.md](./DEPLOY.md)**.
 
+## MongoDB keep-alive
+
+On Vercel, a daily Cron pings Atlas so free clusters do not pause. See **[MONGODB-KEEPALIVE.md](./MONGODB-KEEPALIVE.md)**.
+
 ## Setup
 
 1. Run MongoDB locally (or use [MongoDB Atlas](https://www.mongodb.com/atlas) for production). Default URI: `mongodb://127.0.0.1:27017/ynh_notices`.

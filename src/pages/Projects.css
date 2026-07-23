@@ -84,6 +84,12 @@
   gap: clamp(1.75rem, 3.5vw, 2.75rem) clamp(1.5rem, 3vw, 2.5rem);
 }
 
+.projects__status {
+  margin: 1.5rem 0 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
 .project-card__media {
   overflow: hidden;
   aspect-ratio: 16 / 10;
@@ -189,7 +195,7 @@
   padding: 0.95rem 1.7rem;
   border: none;
   border-radius: 999px;
-  background: var(--green-deep);
+  background: var(--blue-deep);
   color: var(--surface);
   font-size: 0.95rem;
   font-weight: 600;
@@ -200,7 +206,7 @@
 }
 
 .projects__all:hover {
-  background: var(--green);
+  background: var(--blue);
   transform: translateY(-2px);
   box-shadow: 0 14px 30px rgba(42, 77, 56, 0.28);
 }

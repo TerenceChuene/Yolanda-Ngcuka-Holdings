@@ -5,11 +5,13 @@ import multer from 'multer'
 import path from 'path'
 import { access } from 'fs/promises'
 import { fileURLToPath } from 'url'
-import { connectDB } from './config/db.js'
+import { connectDB, pingMongo } from './config/db.js'
 import { ensureBootstrapAdmin } from './controllers/authController.js'
 import noticesRouter from './routes/notices.js'
+import projectsRouter from './routes/projects.js'
 import authRouter from './routes/auth.js'
 import { sendStoredFile, migrateDiskUploadsToGridFS } from './storage/files.js'
+import { ensureSeedProjects } from './seed/projects.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express()
@@ -31,9 +33,29 @@ app.get('/uploads/:filename', (req, res) => {
 })
 app.use('/api/auth', authRouter)
 app.use('/api/notices', noticesRouter)
+app.use('/api/projects', projectsRouter)
 
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true })
+})
+
+/** Vercel Cron hits this to keep MongoDB Atlas from pausing. */
+app.get('/api/cron/keep-alive', async (req, res) => {
+  const secret = process.env.CRON_SECRET
+  if (secret) {
+    const auth = req.headers.authorization
+    if (auth !== `Bearer ${secret}`) {
+      return res.status(401).json({ error: 'Unauthorized' })
+    }
+  }
+
+  try {
+    await pingMongo()
+    return res.json({ ok: true, mongo: 'pong' })
+  } catch (err) {
+    console.error('MongoDB keep-alive failed:', err.message)
+    return res.status(503).json({ ok: false, error: err.message })
+  }
 })
 
 async function mountClient() {
@@ -76,6 +98,7 @@ async function start() {
   await connectDB(uri)
   await migrateDiskUploadsToGridFS()
   await ensureBootstrapAdmin()
+  await ensureSeedProjects()
   await mountClient()
   mountErrorHandler()
 
@@ -84,6 +107,7 @@ async function start() {
     console.log(`Client is running on port ${CLIENT_ORIGIN}`)
     console.log('Uploads are served from MongoDB GridFS at /uploads/:filename')
     console.log(`Notices API is running on http://localhost:${PORT}/api/notices`)
+    console.log(`Projects API is running on http://localhost:${PORT}/api/projects`)
     console.log(`Auth API is running on http://localhost:${PORT}/api/auth`)
     console.log(`Health check is running on http://localhost:${PORT}/api/health`)
   })

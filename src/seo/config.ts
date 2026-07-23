@@ -1,6 +1,6 @@
 /** Canonical site origin — set VITE_SITE_URL in production builds. */
 export const SITE_URL = (
-  import.meta.env.VITE_SITE_URL || 'https://ynh.co.za'
+  import.meta.env.VITE_SITE_URL || 'https://yolandangcukaholdings.co.za'
 ).replace(/\/$/, '')
 
 export const SITE_NAME = 'Yolanda Ngcuka Holdings'

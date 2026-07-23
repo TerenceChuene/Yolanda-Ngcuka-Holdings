@@ -1,8 +1,5 @@
-import { useState } from 'react'
-import project1 from '../assets/project-1.png'
-import project2 from '../assets/project-2.png'
-import project3 from '../assets/project-3.png'
-import project4 from '../assets/project-4.png'
+import { useEffect, useState } from 'react'
+import { fetchProjects, projectImageUrl, type Project } from '../api/projects'
 import Waves from '../components/Waves'
 import './Projects.css'
 
@@ -26,52 +23,37 @@ const filters: { id: Category; label: string }[] = [
   { id: 'mining', label: 'Mining Projects' },
 ]
 
-const projects = [
-  {
-    id: 'vps-gauteng',
-    category: 'feedlot' as Category,
-    title: 'Feedlot Projects',
-    subtitle: 'VPS Gauteng — 2025',
-    meta: 'Gauteng · 2025',
-    image: project1,
-    description:
-      'Environmental authorisation and compliance management for multiple feedlot operations in Gauteng, including development of environmental management plans, regulatory submissions, monitoring programmes, and rehabilitation strategies to minimise environmental impacts and support sustainable agricultural operations.',
-  },
-  {
-    id: 'molobeng',
-    category: 'mining' as Category,
-    title: 'Molobeng Coal Mining',
-    subtitle: 'Vryheid, KwaZulu-Natal — 2024',
-    meta: 'Vryheid, KwaZulu-Natal · 2024',
-    image: project2,
-    description:
-      'Environmental management and rehabilitation planning for coal mining operations, including water quality monitoring, biodiversity assessments, and progressive rehabilitation strategies.',
-  },
-  {
-    id: 'dundee',
-    category: 'mining' as Category,
-    title: 'Dundee Mining',
-    subtitle: 'Kuruman, Northern Cape — 2023',
-    meta: 'Kuruman, Northern Cape · 2023',
-    image: project3,
-    description:
-      'Comprehensive environmental auditing and monitoring services for active mining operations, ensuring ongoing regulatory compliance and environmental performance tracking.',
-  },
-  {
-    id: 'dandee',
-    category: 'mining' as Category,
-    title: 'Dandee Mining',
-    subtitle: 'Kenhardt, Northern Cape — 2023',
-    meta: 'Kenhardt, Northern Cape · 2023',
-    image: project4,
-    description:
-      'Environmental authorisation and compliance management for mining operations in the Northern Cape region, including full EA application and environmental management programme development.',
-  },
-]
-
 export default function Projects() {
   const [active, setActive] = useState<Category>('all')
   const [expanded, setExpanded] = useState<string | null>(null)
+  const [projects, setProjects] = useState<Project[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function load() {
+      try {
+        const data = await fetchProjects()
+        if (!cancelled) {
+          setProjects(data)
+          setError(null)
+        }
+      } catch {
+        if (!cancelled) {
+          setError('Could not load projects right now.')
+        }
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    }
+
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const visible =
     active === 'all' ? projects : projects.filter((p) => p.category === active)
@@ -106,45 +88,62 @@ export default function Projects() {
           ))}
         </div>
 
-        <ul className="projects__grid">
-          {visible.map((project) => {
-            const isOpen = expanded === project.id
-            return (
-              <li
-                key={project.id}
-                className="project-card"
-                data-reveal
-              >
-                <article>
-                  <div className="project-card__media">
-                    <img src={project.image} alt="" />
-                  </div>
-                  <h2 className="project-card__title">{project.title}</h2>
-                  <p className="project-card__subtitle">{project.subtitle}</p>
-                  <p
-                    className={`project-card__desc${isOpen ? ' project-card__desc--open' : ''}`}
-                  >
-                    {project.description}
-                  </p>
-                  <div className="project-card__footer">
-                    <span className="project-card__meta">{project.meta}</span>
-                    <button
-                      type="button"
-                      className="project-card__more"
-                      aria-expanded={isOpen}
-                      onClick={() =>
-                        setExpanded(isOpen ? null : project.id)
-                      }
+        {loading ? (
+          <p className="projects__status" data-reveal>
+            Loading projects…
+          </p>
+        ) : error ? (
+          <p className="projects__status" data-reveal>
+            {error}
+          </p>
+        ) : visible.length === 0 ? (
+          <p className="projects__status" data-reveal>
+            No projects in this category yet.
+          </p>
+        ) : (
+          <ul className="projects__grid">
+            {visible.map((project) => {
+              const isOpen = expanded === project.id
+              return (
+                <li key={project.id} className="project-card" data-reveal>
+                  <article>
+                    <div className="project-card__media">
+                      <img
+                        src={projectImageUrl(project.image_url)}
+                        alt=""
+                        width={900}
+                        height={300}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <h2 className="project-card__title">{project.title}</h2>
+                    <p className="project-card__subtitle">{project.subtitle}</p>
+                    <p
+                      className={`project-card__desc${isOpen ? ' project-card__desc--open' : ''}`}
                     >
-                      {isOpen ? 'Show Less' : 'Read More'}
-                      {arrow}
-                    </button>
-                  </div>
-                </article>
-              </li>
-            )
-          })}
-        </ul>
+                      {project.description}
+                    </p>
+                    <div className="project-card__footer">
+                      <span className="project-card__meta">{project.meta}</span>
+                      <button
+                        type="button"
+                        className="project-card__more"
+                        aria-expanded={isOpen}
+                        onClick={() =>
+                          setExpanded(isOpen ? null : project.id)
+                        }
+                      >
+                        {isOpen ? 'Show Less' : 'Read More'}
+                        {arrow}
+                      </button>
+                    </div>
+                  </article>
+                </li>
+              )
+            })}
+          </ul>
+        )}
 
         <div className="projects__cta" data-reveal>
           <button

@@ -13,7 +13,7 @@ export default function Waves({ side = 'left' }: WavesProps) {
       <svg viewBox="0 0 420 180" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M-20 120C40 70 90 160 160 100C230 40 280 90 340 55C380 32 410 20 450 40"
-          stroke="var(--green)"
+          stroke="var(--blue)"
           strokeWidth="1.5"
           strokeOpacity="0.35"
         />

@@ -65,11 +65,11 @@
 }
 
 .navbar__link:hover {
-  color: var(--green-deep);
+  color: var(--blue-deep);
 }
 
 .navbar__link--active {
-  color: var(--green-deep);
+  color: var(--blue-deep);
 }
 
 .navbar__link--active::after {
@@ -79,7 +79,7 @@
   bottom: 0;
   width: 1.15rem;
   height: 2px;
-  background: var(--green);
+  background: var(--blue);
   transform: translateX(-50%);
   transition:
     width 0.3s var(--ease-out),

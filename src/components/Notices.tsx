@@ -29,7 +29,13 @@ function splitDate(iso: string) {
   }
 }
 
-export default function Notices() {
+type NoticesProps = {
+  /** `page` embeds under NoticePage banner; `section` is the home block. */
+  variant?: 'section' | 'page'
+}
+
+export default function Notices({ variant = 'section' }: NoticesProps) {
+  const isPage = variant === 'page'
   const [notices, setNotices] = useState<Notice[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -59,7 +65,12 @@ export default function Notices() {
 
   if (loading) {
     return (
-      <section className="notices" id="notices" data-nav-tone="light" aria-busy="true">
+      <section
+        className={`notices${isPage ? ' notices--embed' : ''}`}
+        id={isPage ? undefined : 'notices'}
+        data-nav-tone="light"
+        aria-busy="true"
+      >
         <div className="notices__inner">
           <p className="notices__status">Loading notices…</p>
         </div>
@@ -67,73 +78,91 @@ export default function Notices() {
     )
   }
 
-  if (error || notices.length === 0) {
+  if (!isPage && (error || notices.length === 0)) {
     return null
   }
 
   return (
-    <section className="notices" id="notices" data-nav-tone="light">
-      <Waves />
+    <section
+      className={`notices${isPage ? ' notices--embed' : ''}`}
+      id={isPage ? undefined : 'notices'}
+      data-nav-tone="light"
+    >
+      {!isPage && <Waves />}
       <div className="notices__inner">
-        <header className="notices__header" data-reveal>
-          <div className="notices__heading">
-            <p className="notices__eyebrow">Notices & Updates</p>
-            <h2 className="notices__title">Official public notices & documents</h2>
-          </div>
-          
-        </header>
+        {!isPage && (
+          <header className="notices__header" data-reveal>
+            <div className="notices__heading">
+              <p className="notices__eyebrow">Notices & Updates</p>
+              <h2 className="notices__title">Official public notices & documents</h2>
+            </div>
+          </header>
+        )}
 
-        <ul className="notices__grid">
-          {notices.map((notice) => {
-            const linkProps = noticeLinkProps(notice.file_type)
-            const href = noticeFileUrl(notice.file_url)
-            const { day, month } = splitDate(notice.upload_date)
-            const image = isImageType(notice.file_type)
+        {error ? (
+          <p className="notices__status" role="alert">
+            {error}
+          </p>
+        ) : notices.length === 0 ? (
+          <p className="notices__status">
+            There are no active public notices at the moment. Please check back
+            soon.
+          </p>
+        ) : (
+          <ul className="notices__grid">
+            {notices.map((notice) => {
+              const linkProps = noticeLinkProps(notice.file_type)
+              const href = noticeFileUrl(notice.file_url)
+              const { day, month } = splitDate(notice.upload_date)
+              const image = isImageType(notice.file_type)
 
-            return (
-              <li
-                key={notice.id}
-                className="notices__item"
-                data-reveal
-              >
-                <a
-                  className="notice-card"
-                  href={href}
-                  target={linkProps.target}
-                  rel={linkProps.rel}
-                  download={linkProps.download}
+              return (
+                <li
+                  key={notice.id}
+                  className="notices__item"
+                  data-reveal
                 >
-                  <div className="notice-card__media">
-                    {image ? (
-                      <img
-                        className="notice-card__image"
-                        src={href}
-                        alt=""
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div
-                        className={`notice-card__placeholder notice-card__placeholder--${notice.file_type.toLowerCase()}`}
-                        aria-hidden="true"
-                      >
-                        <span className="notice-card__ext">
-                          {notice.file_type.toUpperCase()}
-                        </span>
+                  <a
+                    className="notice-card"
+                    href={href}
+                    target={linkProps.target}
+                    rel={linkProps.rel}
+                    download={linkProps.download}
+                  >
+                    <div className="notice-card__media">
+                      {image ? (
+                        <img
+                          className="notice-card__image"
+                          src={href}
+                          alt=""
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div
+                          className={`notice-card__placeholder notice-card__placeholder--${notice.file_type.toLowerCase()}`}
+                          aria-hidden="true"
+                        >
+                          <span className="notice-card__ext">
+                            {notice.file_type.toUpperCase()}
+                          </span>
+                        </div>
+                      )}
+                      <div className="notice-card__date">
+                        <span className="notice-card__day">{day}</span>
+                        <span className="notice-card__month">{month}</span>
                       </div>
-                    )}
-                    <div className="notice-card__date">
-                      <span className="notice-card__day">{day}</span>
-                      <span className="notice-card__month">{month}</span>
                     </div>
-                  </div>
 
-                  <p className="notice-card__category">{fileCategory(notice.file_type)}</p>
-                  <h3 className="notice-card__title">{notice.title}</h3>
-                </a>
-              </li>
-            )
-          })}
-        </ul>
+                    <p className="notice-card__category">
+                      {fileCategory(notice.file_type)}
+                    </p>
+                    <h3 className="notice-card__title">{notice.title}</h3>
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
+        )}
       </div>
     </section>
   )

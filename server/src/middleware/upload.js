@@ -20,6 +20,13 @@ const ALLOWED_MIME_TYPES = new Set([
   'image/jpeg',
 ])
 
+const IMAGE_EXTENSIONS = new Set(['png', 'jpg', 'jpeg', 'webp'])
+const IMAGE_MIME_TYPES = new Set([
+  'image/png',
+  'image/jpeg',
+  'image/webp',
+])
+
 function getExtension(filename) {
   return path.extname(filename).slice(1).toLowerCase()
 }
@@ -36,11 +43,28 @@ function fileFilter(_req, file, cb) {
   cb(null, true)
 }
 
+function imageFileFilter(_req, file, cb) {
+  const ext = getExtension(file.originalname)
+  if (!IMAGE_EXTENSIONS.has(ext) || !IMAGE_MIME_TYPES.has(file.mimetype)) {
+    cb(new Error('Invalid image type. Allowed: PNG, JPG, JPEG, WEBP.'))
+    return
+  }
+  cb(null, true)
+}
+
 export const upload = multer({
   storage,
   fileFilter,
   limits: { fileSize: 10 * 1024 * 1024 },
 })
+
+/** Project portfolio images */
+export const uploadImage = multer({
+  storage,
+  fileFilter: imageFileFilter,
+  limits: { fileSize: 10 * 1024 * 1024 },
+})
+
 
 export function buildStoredFilename(originalname) {
   const ext = getExtension(originalname)

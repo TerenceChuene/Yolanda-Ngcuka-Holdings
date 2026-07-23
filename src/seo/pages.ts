@@ -50,6 +50,12 @@ export const pageSeo: Record<string, PageSeo> = {
       'Selected environmental consulting projects across feedlot and mining operations in Gauteng, KwaZulu-Natal, and the Northern Cape.',
     path: '/projects',
   },
+  '/notices': {
+    title: `Notices & Updates | ${SITE_NAME}`,
+    description:
+      'Official public notices, regulatory documents, and company updates from Yolanda Ngcuka Holdings.',
+    path: '/notices',
+  },
   '/contact': {
     title: `Contact | ${SITE_NAME}`,
     description:

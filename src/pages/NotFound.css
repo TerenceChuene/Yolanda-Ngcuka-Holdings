@@ -30,7 +30,7 @@
   font-size: clamp(1.35rem, 2.8vw, 1.85rem);
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: var(--green-deep);
+  color: var(--blue-deep);
   line-height: 1.2;
 }
 
@@ -41,7 +41,7 @@
   font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.04em;
-  color: var(--green);
+  color: var(--blue);
   opacity: 0.22;
   animation: notFoundFade 1s var(--ease-out) 0.1s both;
 }
@@ -117,13 +117,13 @@
 
 .not-found__btn--ghost {
   background: transparent;
-  color: var(--green-deep);
+  color: var(--blue-deep);
   border: 1.5px solid rgba(42, 77, 56, 0.35);
 }
 
 .not-found__btn--ghost:hover {
-  background: var(--green-soft);
-  border-color: var(--green);
+  background: var(--blue-soft);
+  border-color: var(--blue);
 }
 
 @keyframes notFoundRise {

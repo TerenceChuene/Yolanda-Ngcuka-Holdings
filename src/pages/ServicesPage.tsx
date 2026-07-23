@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 import Waves from '../components/Waves'
-import serviceAuthorisation from '../assets/service-authorisation.jpg'
-import serviceAudits from '../assets/service-audits.jpg'
-import serviceMonitoring from '../assets/service-monitoring.jpg'
-import serviceRehabilitation from '../assets/service-rehabilitation.jpg'
+import serviceAuthorisation from '../assets/optimized/service-authorisation.webp'
+import serviceAudits from '../assets/optimized/service-audits.webp'
+import serviceMonitoring from '../assets/optimized/service-monitoring.webp'
+import serviceRehabilitation from '../assets/optimized/service-rehabilitation.webp'
 import './Services.css'
 
 const arrowIcon = (
@@ -113,6 +113,10 @@ export default function ServicesPage() {
                     className="services__detail-image"
                     src={service.image}
                     alt={service.imageAlt}
+                    width={1200}
+                    height={900}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>

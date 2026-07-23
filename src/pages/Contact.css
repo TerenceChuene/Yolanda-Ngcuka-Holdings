@@ -78,7 +78,7 @@
   align-items: center;
   padding: 0.4rem 0.85rem;
   border-radius: 999px;
-  background: var(--green);
+  background: var(--blue);
   color: var(--surface);
   font-size: 0.78rem;
   font-weight: 700;
@@ -136,7 +136,7 @@
   flex-shrink: 0;
   width: 28px;
   height: 28px;
-  color: var(--green);
+  color: var(--blue);
 }
 
 .contact-card__icon svg {
@@ -168,7 +168,7 @@
 }
 
 .contact-card__link:hover {
-  color: var(--green-deep);
+  color: var(--blue-deep);
   text-decoration: underline;
 }
 
@@ -176,7 +176,7 @@
   margin-top: 1.35rem;
   padding: 1rem 1.1rem;
   border: 2px solid var(--charcoal);
-  background: var(--green-soft);
+  background: var(--blue-soft);
   box-shadow: 4px 4px 0 var(--charcoal);
 }
 
@@ -225,7 +225,7 @@
 
 .contact-field em {
   font-style: normal;
-  color: var(--green);
+  color: var(--blue);
 }
 
 .contact-field input,
@@ -338,8 +338,8 @@
 }
 
 .contact-card__success {
-  background: var(--green-soft);
-  color: var(--green-deep);
+  background: var(--blue-soft);
+  color: var(--blue-deep);
 }
 
 .contact-card__error {

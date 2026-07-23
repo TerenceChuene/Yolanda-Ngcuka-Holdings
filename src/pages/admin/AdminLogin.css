@@ -15,7 +15,7 @@
   background:
     radial-gradient(ellipse 70% 55% at 15% 20%, rgba(224, 184, 92, 0.3), transparent 55%),
     radial-gradient(ellipse 55% 45% at 85% 75%, rgba(61, 107, 79, 0.28), transparent 50%),
-    linear-gradient(160deg, #121210 0%, #1a1f1b 45%, #141412 100%);
+    linear-gradient(160deg, #121210 0%, #1a1d1f 45%, #141412 100%);
   animation: loginGlow 14s ease-in-out infinite alternate;
 }
 
@@ -131,7 +131,7 @@
 }
 
 .admin-login__submit:hover:not(:disabled) {
-  background: var(--green-deep);
+  background: var(--blue-deep);
   transform: translateY(-1px);
 }
 

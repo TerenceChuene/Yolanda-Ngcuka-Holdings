@@ -21,10 +21,13 @@ const links = [
   { label: 'Service', to: '/#services', section: 'services' },
   { label: 'Team', to: '/#team', section: 'team' },
   { label: 'Projects', to: '/#projects', section: 'projects' },
+  { label: 'Notices', to: '/notices', section: 'notices', page: true },
   { label: 'Contact', to: '/#contact', section: 'contact' },
 ] as const
 
-const SECTION_IDS = links.map((link) => link.section)
+const SECTION_IDS = links
+  .filter((link) => !('page' in link && link.page))
+  .map((link) => link.section)
 
 type NavTone = 'light' | 'dark'
 
@@ -216,13 +219,24 @@ export default function Navbar() {
           <ul className={`navbar__links${open ? ' navbar__links--open' : ''}`}>
             {links.map((link) => {
               const active = isLinkActive(link.section)
+              const isPage = 'page' in link && link.page
               return (
                 <li key={link.label}>
                   <Link
                     to={link.to}
                     className={`navbar__link${active ? ' navbar__link--active' : ''}`}
                     aria-current={active ? 'true' : undefined}
-                    onClick={(event) => goToSection(event, link.section, link.to)}
+                    onClick={(event) => {
+                      if (isPage) {
+                        setOpen(false)
+                        return
+                      }
+                      goToSection(
+                        event,
+                        link.section as (typeof SECTION_IDS)[number],
+                        link.to,
+                      )
+                    }}
                   >
                     {link.label}
                   </Link>
