@@ -22,10 +22,11 @@ export default function Logo({ variant = 'navbar' }: LogoProps) {
         src={logo}
         alt="Yolanda Ngcuka Holdings"
         className="brand-logo__img"
-        width={326}
-        height={200}
+        width={208}
+        height={128}
         decoding="async"
-        fetchPriority={variant === 'navbar' ? 'high' : 'low'}
+        fetchPriority="low"
+        loading={variant === 'footer' ? 'lazy' : undefined}
       />
     </Link>
   )

@@ -53,17 +53,25 @@
     <meta name="geo.region" content="ZA-KZN" />
     <meta name="geo.placename" content="Newcastle" />
 
-    <link rel="preload" as="image" href="/hero.webp" fetchpriority="high" />
+    <!-- Preload mobile hero; srcset in <img> upgrades on larger viewports -->
+    <link rel="preload" as="image" href="/bg-1-750.webp" type="image/webp" fetchpriority="high" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Critical fonts only (hero/body). Cormorant loads after first paint. -->
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@500;600;700&family=Outfit:wght@600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&family=Outfit:wght@600;700&display=swap"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@500;600;700&family=Outfit:wght@600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&family=Outfit:wght@600;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&display=swap"
       rel="stylesheet"
       media="print"
       onload="this.media='all'"

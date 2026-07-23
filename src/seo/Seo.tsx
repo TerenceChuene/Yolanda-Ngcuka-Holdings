@@ -56,15 +56,10 @@ export default function Seo() {
   const { pathname } = useLocation()
   const page = resolvePageSeo(pathname)
   const path = page.path === '/' ? '/' : page.path
-  // Prefer configured production origin; self-reference on preview hosts so
-  // PageSpeed/Lighthouse canonical checks pass on *.vercel.app.
-  const host =
-    typeof window !== 'undefined' ? window.location.hostname : ''
-  const isPreviewHost =
-    host.endsWith('.vercel.app') || host === 'localhost' || host === '127.0.0.1'
-  const origin = isPreviewHost
-    ? `${window.location.protocol}//${window.location.host}`
-    : SITE_URL
+  // Self-referencing canonical for the current host (passes PSI on *.vercel.app
+  // and on the production domain). Prefer SITE_URL only during SSR/prerender.
+  const origin =
+    typeof window !== 'undefined' ? window.location.origin : SITE_URL
   const canonical = `${origin}${path}`
   const ogImage = absoluteUrl(OG_IMAGE_PATH)
   const robots = page.noIndex ? 'noindex, nofollow' : 'index, follow'

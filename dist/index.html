@@ -53,17 +53,25 @@
     <meta name="geo.region" content="ZA-KZN" />
     <meta name="geo.placename" content="Newcastle" />
 
-    <link rel="preload" as="image" href="/hero.webp" fetchpriority="high" />
+    <!-- Preload mobile hero; srcset in <img> upgrades on larger viewports -->
+    <link rel="preload" as="image" href="/bg-1-750.webp" type="image/webp" fetchpriority="high" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Critical fonts only (hero/body). Cormorant loads after first paint. -->
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@500;600;700&family=Outfit:wght@600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&family=Outfit:wght@600;700&display=swap"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@500;600;700&family=Outfit:wght@600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&family=Outfit:wght@600;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&display=swap"
       rel="stylesheet"
       media="print"
       onload="this.media='all'"
@@ -101,12 +109,12 @@
         }
       }
     </script>
-    <script type="module" crossorigin src="/assets/index-BHQl-jQy.js"></script>
+    <script type="module" crossorigin src="/assets/index-CLsvix_i.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-Bh1tDfsg.js">
     <link rel="modulepreload" crossorigin href="/assets/helmet-D9WnS_Ma.js">
     <link rel="modulepreload" crossorigin href="/assets/react-BD6gz3P9.js">
     <link rel="modulepreload" crossorigin href="/assets/router-Bvq56PCq.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-Bnl1-WFr.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-bElHFimH.css">
   </head>
   <body>
     <div id="root"></div>

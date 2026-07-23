@@ -20,16 +20,21 @@ const arrow = (
   </svg>
 )
 
+const HERO_SRC = '/bg-1-750.webp'
+const HERO_SRCSET = '/bg-1-750.webp 750w, /bg-1-1100.webp 1100w, /bg-1.webp 1400w'
+
 export default function Landing() {
   return (
     <main className="landing" id="home" data-nav-tone="dark">
       <div className="landing__media" aria-hidden="true">
         <img
           className="landing__media-img"
-          src="/bg-1.webp"
+          src={HERO_SRC}
+          srcSet={HERO_SRCSET}
+          sizes="100vw"
           alt=""
-          width={960}
-          height={1280}
+          width={1400}
+          height={1050}
           decoding="async"
           fetchPriority="high"
         />

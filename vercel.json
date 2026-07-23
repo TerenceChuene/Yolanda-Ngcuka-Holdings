@@ -11,7 +11,7 @@
       ]
     },
     {
-      "source": "/(hero\\.webp|logo\\.webp|og-image\\.png|favicon.ico|favicon.svg|robots.txt|llms.txt|sitemap.xml)",
+      "source": "/(hero\\.webp|bg-1\\.webp|bg-1-750\\.webp|bg-1-1100\\.webp|logo\\.webp|og-image\\.png|favicon.ico|favicon.svg|robots.txt|llms.txt|sitemap.xml)",
       "headers": [
         {
           "key": "Cache-Control",
